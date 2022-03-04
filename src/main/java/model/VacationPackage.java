@@ -35,12 +35,12 @@ public class VacationPackage {
     @Column(nullable = false)
     private Integer nrPlaces;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "destination_id", referencedColumnName = "Id")
     // eager loading by default
     private Destination destination;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     // lazy loading by default
     private Set<Booking> bookings;
 

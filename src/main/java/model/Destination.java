@@ -18,7 +18,7 @@ public class Destination {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "destination")
+    @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL)
     // lazy loading by default
     private List<VacationPackage> vacationPackages;
 
