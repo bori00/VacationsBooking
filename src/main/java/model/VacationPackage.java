@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "vacation_package")
@@ -35,7 +37,12 @@ public class VacationPackage {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "destination_id", referencedColumnName = "Id")
+    // eager loading by default
     private Destination destination;
+
+    @OneToMany(mappedBy = "user")
+    // lazy loading by default
+    private Set<Booking> bookings;
 
     public VacationPackage(String name, float price, LocalDate startDate, LocalDate endDate, String extraDetails, Integer nrPlaces) {
         this.name = name;

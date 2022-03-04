@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 import java.util.stream.Stream;
 
 @Entity
@@ -23,6 +24,10 @@ public class User {
 
     @Column(nullable = false)
     private UserType userType;
+
+    @OneToMany(mappedBy = "")
+    // lazy loading by default
+    private Set<Booking> bookings;
 
     public User(String userName, String password, UserType userType) {
         this.userName = userName;
