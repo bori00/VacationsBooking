@@ -33,6 +33,10 @@ public class VacationPackage {
     @Column(nullable = false)
     private Integer nrPlaces;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "destination_id", referencedColumnName = "Id")
+    private Destination destination;
+
     public VacationPackage(String name, float price, LocalDate startDate, LocalDate endDate, String extraDetails, Integer nrPlaces) {
         this.name = name;
         this.price = price;
