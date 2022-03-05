@@ -28,7 +28,7 @@ public class User implements IEntity {
     @Column(nullable = false)
     private UserType userType;
 
-    @OneToMany(mappedBy = "", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     // lazy loading by default
     private Set<Booking> bookings;
 

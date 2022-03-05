@@ -1,10 +1,14 @@
 package repository.RelationalDBImpl;
 
 import model.IEntity;
+import org.hibernate.Session;
 import repository.IRepository;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.Table;
+import java.util.List;
 
 public class RepositoryImpl<T extends IEntity> implements IRepository<T> {
 
@@ -39,5 +43,12 @@ public class RepositoryImpl<T extends IEntity> implements IRepository<T> {
         } else {
             entityManager.merge(entityManager.merge(entity));
         }
+    }
+
+    @Override
+    public List<T> findAll() {
+        String hql = "from " + type.getName();
+        Query query = entityManager.createQuery(hql);
+        return (List<T>) query.getResultList();
     }
 }
