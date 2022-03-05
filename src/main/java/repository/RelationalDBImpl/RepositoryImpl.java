@@ -46,6 +46,11 @@ public abstract class RepositoryImpl<T extends IEntity> implements IRepository<T
     }
 
     @Override
+    public void deleteById(Long id) {
+        delete(findById(id));
+    }
+
+    @Override
     public List<T> findAll() {
         String hql = "from " + type.getName();
         Query query = entityManager.createQuery(hql);
