@@ -40,11 +40,12 @@ public class VacationPackage implements IEntity{
     // eager loading by default
     private Destination destination;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     // lazy loading by default
     private Set<Booking> bookings;
 
-    public VacationPackage(String name, float price, LocalDate startDate, LocalDate endDate, String extraDetails, Integer nrPlaces) {
+    public VacationPackage(String name, float price, LocalDate startDate, LocalDate endDate,
+                           String extraDetails, Integer nrPlaces, Destination destination) {
         this.name = name;
         this.price = price;
         this.startDate = startDate;

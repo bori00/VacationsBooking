@@ -40,7 +40,6 @@ public class UserService {
     public OperationStatus logIn(String userName, String password) {
         // find user in the database
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
         UserRepository userRepository = new UserRepositoryImpl(entityManager);
         Optional<User> possibleUser = userRepository.findByUserName(userName);
         entityManager.close();
