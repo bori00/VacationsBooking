@@ -10,7 +10,7 @@ import javax.persistence.Query;
 import javax.persistence.Table;
 import java.util.List;
 
-public class RepositoryImpl<T extends IEntity> implements IRepository<T> {
+public abstract class RepositoryImpl<T extends IEntity> implements IRepository<T> {
 
     private final Class<T> type;
 
