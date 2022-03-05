@@ -62,6 +62,7 @@ public class UserService {
 
     public OperationStatus logOut() {
         ActiveUserStatus.getInstance().logOut();
+        return OperationStatus.getSuccessfulOperationStatus();
     }
 
 }
