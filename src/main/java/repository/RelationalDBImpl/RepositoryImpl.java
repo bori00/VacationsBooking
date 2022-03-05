@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.Table;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class RepositoryImpl<T extends IEntity> implements IRepository<T> {
 
@@ -22,8 +23,8 @@ public abstract class RepositoryImpl<T extends IEntity> implements IRepository<T
     }
 
     @Override
-    public T findById(Long id) {
-        return entityManager.find(type, id);
+    public Optional<T> findById(Long id) {
+        return Optional.ofNullable(entityManager.find(type, id));
     }
 
     @Override
@@ -47,7 +48,7 @@ public abstract class RepositoryImpl<T extends IEntity> implements IRepository<T
 
     @Override
     public void deleteById(Long id) {
-        delete(findById(id));
+        delete(findById(id).get());
     }
 
     @Override

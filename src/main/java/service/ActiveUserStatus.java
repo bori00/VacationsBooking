@@ -14,6 +14,10 @@ public class ActiveUserStatus {
         return loggedInUser != null;
     }
 
+    public User getLoggedInUser() {
+        return loggedInUser;
+    }
+
     public void logIn(User user) {
         loggedInUser = user;
     }
