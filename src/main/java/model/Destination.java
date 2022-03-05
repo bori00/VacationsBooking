@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "destination")
 @NoArgsConstructor
 @Getter
-public class Destination {
+public class Destination implements IEntity {
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;

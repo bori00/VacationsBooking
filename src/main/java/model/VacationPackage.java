@@ -12,7 +12,7 @@ import java.util.Set;
 @Table(name = "vacation_package")
 @NoArgsConstructor
 @Getter
-public class VacationPackage {
+public class VacationPackage implements IEntity{
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
