@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "booking")
 @NoArgsConstructor
 @Getter
-public class Booking implements IEntity{
+public class Booking implements IEntity {
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;

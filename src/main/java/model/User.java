@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 @Getter
 @Setter
 public class User implements IEntity {
+
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
