@@ -2,6 +2,7 @@ package model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -11,7 +12,9 @@ import java.util.stream.Stream;
 @Table(name = "user")
 @NoArgsConstructor
 @Getter
-public class User {
+@Setter
+public class User implements IEntity {
+
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -25,7 +28,7 @@ public class User {
     @Column(nullable = false)
     private UserType userType;
 
-    @OneToMany(mappedBy = "", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     // lazy loading by default
     private Set<Booking> bookings;
 
