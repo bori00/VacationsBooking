@@ -9,6 +9,7 @@ import repository.UserRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Optional;
 
 public class UserRepositoryImpl extends RepositoryImpl<User> implements UserRepository {
     public UserRepositoryImpl(EntityManager entityManager) {
@@ -16,11 +17,11 @@ public class UserRepositoryImpl extends RepositoryImpl<User> implements UserRepo
     }
 
     @Override
-    public List<User> findByUserName(String userName) {
+    public Optional<User> findByUserName(String userName) {
         Session session = (Session) entityManager.getDelegate();
         Query query = session.createQuery("Select u from User u where u.userName=:uName",
                 User.class);
         query.setParameter("uName", userName);
-        return (List<User>) query.getResultList();
+        return query.getResultList().stream().findFirst();
     }
 }

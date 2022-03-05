@@ -3,7 +3,8 @@ package repository;
 import model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository extends IRepository<User> {
-    List<User> findByUserName(String userName);
+    Optional<User> findByUserName(String userName);
 }
