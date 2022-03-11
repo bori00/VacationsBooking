@@ -1,5 +1,6 @@
 package model;
 
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,7 +23,7 @@ public class Booking implements IEntity {
     @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "vacation_id", referencedColumnName = "Id")
     // eager loading by default
-    private VacationPackage vacationPackage;
+    private @Valid VacationPackage vacationPackage;
 
     public Booking(User user, VacationPackage vacationPackage) {
         this.user = user;
