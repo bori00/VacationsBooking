@@ -1,5 +1,8 @@
 package service;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import model.User;
 import repository.RelationalDBImpl.UserRepositoryImpl;
 import repository.UserRepository;
@@ -8,6 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UserService {
     private final EntityManagerFactory entityManagerFactory =
@@ -17,24 +22,39 @@ public class UserService {
             "password don't match. Please try again!";
     public static final String INEXISTENT_USER_ERROR = "We're sorry, but it seems like no user " +
             "with this username exists. Please try again!";
+    public static final String USERNAME_TAKEN_ERROR = "We're sorry, but this username is already " +
+            "taken. Please choose another one.";
+
+    private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
 
     public OperationStatus register(String userName, String password) {
-        // todo: validate
-        boolean validData = true;
-        if (validData) {
-            User user = new User(userName, password, User.UserType.VacaySeeker);
-            EntityManager entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            UserRepository userRepository = new UserRepositoryImpl(entityManager);
-            userRepository.save(user);
-            entityManager.getTransaction().commit();
-            entityManager.close();
-            return OperationStatus.getSuccessfulOperationStatus();
-        } else {
-            // return message saying what the problem is
-            return OperationStatus.getFailedOperationStatus(""); // todo: message
+        // validate he new user's data
+        User user = new User(userName, password, User.UserType.VacaySeeker);
+        Set<ConstraintViolation<User>> constraintViolations =
+                validator.validate(user);
+        if (!constraintViolations.isEmpty()) {
+            return OperationStatus.getFailedOperationStatus(
+                    constraintViolations
+                            .stream()
+                            .map(ConstraintViolation::getMessage)
+                            .collect(Collectors.joining("\n")));
         }
+
+        // check that the username is now taken
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        UserRepository userRepository = new UserRepositoryImpl(entityManager);
+        Optional<User> sameUsernameUser = userRepository.findByUserName(userName);
+        if (sameUsernameUser.isPresent()) {
+            return OperationStatus.getFailedOperationStatus(USERNAME_TAKEN_ERROR);
+        }
+
+        // valid data: perform registration
+        entityManager.getTransaction().begin();
+        userRepository.save(user);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        return OperationStatus.getSuccessfulOperationStatus();
     }
 
     public OperationStatus logIn(String userName, String password) {
