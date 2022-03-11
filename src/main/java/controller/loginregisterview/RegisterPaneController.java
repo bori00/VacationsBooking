@@ -1,36 +1,30 @@
 package controller.loginregisterview;
 
+import controller.loginregisterview.util.AlertFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import service.OperationStatus;
+import service.UserService;
 
 public class RegisterPaneController {
-    /** Text field for entering the username. */
     @FXML
     public TextField userNameTextField;
 
-    /** Text field for entering the password. */
     @FXML
     public PasswordField passwordField;
 
-    /**
-     * Sends a request to the delivery service for registration and handles the registration result.
-     */
+    private final UserService userService = new UserService();
+
     public void onRegisterButtonClicked() {
         String userName = userNameTextField.getText();
         String password = passwordField.getText();
 
-       /* ValidationResult<User> validationResult = userValidator.validate(userName, password);
-        if (validationResult.isValid()) {
-            if (!deliveryService.existsUserWithUsername(userName)) {
-                deliveryService.registerClient(userName, password);
-                ((Stage) this.userNameTextField.getScene().getWindow()).close();
-            } else {
-                AlertFactory.showDuplicateUsernameError(userName);
-            }
-        } else {
-            AlertFactory.showInvalidDataError(validationResult);
-        }*/
+        OperationStatus operationStatus = userService.register(userName, password);
+        AlertFactory.showAlert(operationStatus);
+        if (operationStatus.isSuccessful()) {
+            ((Stage) this.userNameTextField.getScene().getWindow()).close();
+        }
     }
 }
