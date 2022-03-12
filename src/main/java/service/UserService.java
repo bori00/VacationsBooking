@@ -84,4 +84,13 @@ public class UserService {
         return OperationStatus.getSuccessfulOperationStatus();
     }
 
+    public Optional<User.UserType> getLoggedInUserType() {
+        User loggedInUser = ActiveUserStatus.getInstance().getLoggedInUser();
+        if (loggedInUser == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(loggedInUser.getUserType());
+        }
+    }
+
 }

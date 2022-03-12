@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.User;
 import service.OperationStatus;
 import service.UserService;
 
@@ -28,7 +29,7 @@ public class LoginPaneController {
         String password = passwordField.getText();
         OperationStatus status = userService.logIn(userName, password);
         if (status.isSuccessful()) {
-            // loadMainStage(deliveryService.getLoggedInUserType().get()); todo
+            loadMainStage(userService.getLoggedInUserType().get());
             ((Stage) this.userNameTextField.getScene().getWindow()).close();
         } else {
             AlertFactory.showAlert(status);
@@ -50,5 +51,30 @@ public class LoginPaneController {
         } catch (IOException e) {
             e.printStackTrace(); //todo
         }
+    }
+
+    private void loadMainStage(User.UserType userType) {
+        FXMLLoader mainPaneLoader = new FXMLLoader(getClass().getResource(
+                getMainPanePath(userType)));
+        AnchorPane mainPane = null;
+        try {
+            mainPane = mainPaneLoader.load();
+            Stage mainStage = new Stage();
+            mainStage.setTitle("Home");
+            mainStage.setScene(new Scene(mainPane));
+            mainStage.show();
+        } catch (IOException e) {
+            e.printStackTrace(); //todo
+        }
+    }
+
+    private String getMainPanePath(User.UserType userType) {
+        switch (userType) {
+            case VacaySeeker:
+                return "/ClientView/client_main_pane.fxml"; //todo
+            case TravellingAgency:
+                return "/admin_view/admin_main_pane.fxml";
+        }
+        return "/admin_view/admin_main_pane.fxml";
     }
 }
