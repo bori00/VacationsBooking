@@ -7,13 +7,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import service.UserService;
+import service.IUserService;
+import service.service_impl.UserService;
 
 import java.io.IOException;
 
 public class AdminPaneController {
 
-    private final UserService userService = new UserService();
+    private final IUserService userService = new UserService();
 
     @FXML
     private Tab destinationsTab;

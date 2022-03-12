@@ -1,29 +1,25 @@
-package service;
+package service.service_impl;
 
 import model.Booking;
-import model.Destination;
 import model.User;
 import model.VacationPackage;
 import repository.BookingRepository;
-import repository.DestinationRepository;
 import repository.RelationalDBImpl.BookingRepositoryImpl;
-import repository.RelationalDBImpl.DestinationRepositoryImpl;
 import repository.RelationalDBImpl.UserRepositoryImpl;
 import repository.RelationalDBImpl.VacationPackageRepositoryImpl;
 import repository.UserRepository;
 import repository.VacationPackageRepository;
+import service.IBookingService;
+import service.IOperationStatus;
 import service.package_status.VacationPackageStatus;
-import service.view_models.DestinationViewModel;
 import service.view_models.VacationPackageUserViewModel;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class BookingService extends AbstractService<Booking> {
+public class BookingService extends AbstractService<Booking> implements IBookingService {
     private static final BookingService instance = new BookingService();
 
     public static final String CANT_BOOK_FULLY_BOOKED_PACKAGE = "We're sorry, this package is " +
@@ -37,7 +33,7 @@ public class BookingService extends AbstractService<Booking> {
         return instance;
     }
 
-    public OperationStatus add(Long vacationPackageId) {
+    public IOperationStatus add(Long vacationPackageId) {
         User currentUser = ActiveUserStatus.getInstance().getLoggedInUser();
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();

@@ -3,9 +3,7 @@ package controller.util;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.IEntity;
-import org.dom4j.rule.Mode;
-import service.AbstractService;
+import service.PropertyChangeObservable;
 import service.view_models.ViewField;
 
 import java.beans.PropertyChangeEvent;
@@ -18,7 +16,7 @@ public abstract class TableController<T> implements PropertyChangeListener {
     private final TableView<T> tableView;
 
     public TableController(Class<T> type,
-                           AbstractService service,
+                           PropertyChangeObservable service,
                            TableView<T> tableView)  {
         this.type = type;
         service.addPropertyChangeListener(this);
@@ -30,12 +28,12 @@ public abstract class TableController<T> implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println("Some event");
-        if (evt.getPropertyName().equals(AbstractService.Events.NEW_ENTITY.toString())) {
+        if (evt.getPropertyName().equals(PropertyChangeObservable.Events.NEW_ENTITY.toString())) {
             System.out.println("Add Event");
             tableView.getItems().add((T) evt.getNewValue());
-        } else if (evt.getPropertyName().equals(AbstractService.Events.REMOVED_ENTITY.toString())) {
+        } else if (evt.getPropertyName().equals(PropertyChangeObservable.Events.REMOVED_ENTITY.toString())) {
             reFillTable();
-        } else if (evt.getPropertyName().equals(AbstractService.Events.EDITED_ENTITY.toString())) {
+        } else if (evt.getPropertyName().equals(PropertyChangeObservable.Events.EDITED_ENTITY.toString())) {
             reFillTable();
         }
     }

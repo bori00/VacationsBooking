@@ -11,8 +11,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import service.OperationStatus;
-import service.VacationPackageService;
+import service.IOperationStatus;
+import service.IVacationPackageService;
+import service.service_impl.VacationPackageService;
 import service.view_models.VacationPackageAdminViewModel;
 
 import java.io.IOException;
@@ -30,12 +31,12 @@ public class VacationManagementController {
     private static final String DELETE_TEXT = "Delete";
     private static final String EDIT_TEXT = "Edit";
 
-    private final VacationPackageService vacationPackageService =
+    private final IVacationPackageService vacationPackageService =
             VacationPackageService.getInstance();
 
     @FXML
     public void initialize() {
-        new TableController<>(
+        new TableController<VacationPackageAdminViewModel>(
                 VacationPackageAdminViewModel.class,
                 vacationPackageService,
                 vacationsTable) {
@@ -155,7 +156,7 @@ public class VacationManagementController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            OperationStatus operationStatus =
+            IOperationStatus operationStatus =
                     vacationPackageService.delete(vacationPackageAdminViewModel.getId());
             AlertFactory.showAlert(operationStatus);
         }

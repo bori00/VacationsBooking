@@ -1,4 +1,4 @@
-package service;
+package service.service_impl;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -9,13 +9,13 @@ import repository.DestinationRepository;
 import repository.RelationalDBImpl.DestinationRepositoryImpl;
 import repository.RelationalDBImpl.VacationPackageRepositoryImpl;
 import repository.VacationPackageRepository;
+import service.IOperationStatus;
+import service.IVacationPackageService;
 import service.filters.VacationPackageFilter;
 import service.view_models.VacationPackageAdminViewModel;
 import service.view_models.VacationPackageUserViewModel;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class VacationPackageService extends AbstractService<VacationPackage> {
+public class VacationPackageService extends AbstractService<VacationPackage> implements IVacationPackageService {
     private static final VacationPackageService instance = new VacationPackageService();
 
     public static final String INVALID_DESTINATION = "This destination does not exist. Please " +
@@ -61,10 +61,10 @@ public class VacationPackageService extends AbstractService<VacationPackage> {
                 .collect(Collectors.toList());
     }
 
-    public OperationStatus add(String name, String destinationName, float price,
-                               LocalDate startDate,
-                               LocalDate endDate,
-                               String extraDetails, int nrPlaces) {
+    public IOperationStatus add(String name, String destinationName, float price,
+                                LocalDate startDate,
+                                LocalDate endDate,
+                                String extraDetails, int nrPlaces) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         // validate vacation package data
         // find destination
@@ -104,7 +104,7 @@ public class VacationPackageService extends AbstractService<VacationPackage> {
         return OperationStatus.getSuccessfulOperationStatus();
     }
 
-    public OperationStatus delete(Long id) {
+    public IOperationStatus delete(Long id) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         VacationPackageRepository vacationPackageRepository = new VacationPackageRepositoryImpl(entityManager);
@@ -117,9 +117,9 @@ public class VacationPackageService extends AbstractService<VacationPackage> {
     }
 
     public OperationStatus edit(Long id, String name, String destinationName, float price,
-                                LocalDate startDate,
-                                LocalDate endDate,
-                                String extraDetails, int nrPlaces) {
+                                 LocalDate startDate,
+                                 LocalDate endDate,
+                                 String extraDetails, int nrPlaces) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         // validate vacation package data
         // find destination

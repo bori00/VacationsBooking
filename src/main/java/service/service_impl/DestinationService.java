@@ -1,33 +1,24 @@
-package service;
+package service.service_impl;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import model.Destination;
-import model.User;
-import model.VacationPackage;
 import repository.DestinationRepository;
 import repository.RelationalDBImpl.DestinationRepositoryImpl;
-import repository.RelationalDBImpl.UserRepositoryImpl;
-import repository.RelationalDBImpl.VacationPackageRepositoryImpl;
-import repository.UserRepository;
-import repository.VacationPackageRepository;
-import service.filters.StatusFilter;
-import service.package_status.VacationPackageStatus;
+import service.IDestinationService;
+import service.IOperationStatus;
 import service.view_models.DestinationViewModel;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class DestinationsService extends AbstractService<Destination> {
+public class DestinationService extends AbstractService<Destination> implements IDestinationService {
 
-    private static final DestinationsService instance = new DestinationsService();
+    private static final DestinationService instance = new DestinationService();
 
     public static String DELETING_DESTINATION_WITH_BOOKED_PACKAGES = "You cannot delete a " +
             "destination for which booked packages exist!";
@@ -36,9 +27,9 @@ public class DestinationsService extends AbstractService<Destination> {
 
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-    private DestinationsService() {}
+    private DestinationService() {}
 
-    public static DestinationsService getInstance() {
+    public static DestinationService getInstance() {
         return instance;
     }
 
@@ -53,7 +44,7 @@ public class DestinationsService extends AbstractService<Destination> {
                 .collect(Collectors.toList());
     }
 
-    public OperationStatus add(String name) {
+    public IOperationStatus add(String name) {
         // validate data
         Destination destination = new Destination(name);
         Set<ConstraintViolation<Destination>> constraintViolations =
@@ -85,7 +76,7 @@ public class DestinationsService extends AbstractService<Destination> {
         return OperationStatus.getSuccessfulOperationStatus();
     }
 
-    public OperationStatus delete(DestinationViewModel destinationViewModel) {
+    public IOperationStatus delete(DestinationViewModel destinationViewModel) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         DestinationRepository destinationRepository =

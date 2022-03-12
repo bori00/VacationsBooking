@@ -11,9 +11,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import model.Destination;
-import service.DestinationsService;
-import service.OperationStatus;
+import service.IDestinationService;
+import service.IOperationStatus;
+import service.service_impl.DestinationService;
 import service.view_models.DestinationViewModel;
 
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class DestinationsManagementController {
 
     private static final String DELETE_TEXT = "Delete";
 
-    private final DestinationsService destinationsService = DestinationsService.getInstance();
+    private final IDestinationService destinationsService = DestinationService.getInstance();
 
     @FXML
     public void initialize() {
@@ -109,7 +109,7 @@ public class DestinationsManagementController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
-           OperationStatus operationStatus = destinationsService.delete(destinationViewModel);
+           IOperationStatus operationStatus = destinationsService.delete(destinationViewModel);
             AlertFactory.showAlert(operationStatus);
         }
     }

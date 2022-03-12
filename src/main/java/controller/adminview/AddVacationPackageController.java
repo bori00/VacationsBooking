@@ -7,12 +7,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import service.DestinationsService;
-import service.OperationStatus;
-import service.VacationPackageService;
+import service.IDestinationService;
+import service.IOperationStatus;
+import service.IVacationPackageService;
+import service.service_impl.DestinationService;
+import service.service_impl.OperationStatus;
+import service.service_impl.VacationPackageService;
 import service.view_models.DestinationViewModel;
-
-import java.util.Arrays;
 
 public class AddVacationPackageController {
     @FXML private TextArea extraDetailsTextArea;
@@ -24,10 +25,10 @@ public class AddVacationPackageController {
     @FXML private TextField nrPlacesTextField;
     @FXML private Button createButton;
 
-    private final VacationPackageService vacationPackageService =
+    private final IVacationPackageService vacationPackageService =
             VacationPackageService.getInstance();
 
-    private final DestinationsService destinationsService = DestinationsService.getInstance();
+    private final IDestinationService destinationsService = DestinationService.getInstance();
 
     @FXML
     void initialize() {
@@ -55,7 +56,7 @@ public class AddVacationPackageController {
         }
         destinationName = destinationChoiceBox.getValue().getName();
 
-        OperationStatus operationStatus = vacationPackageService.add(
+        IOperationStatus operationStatus = vacationPackageService.add(
                 nameTextField.getText(),
                 destinationName,
                 Float.parseFloat(priceTextField.getText()),

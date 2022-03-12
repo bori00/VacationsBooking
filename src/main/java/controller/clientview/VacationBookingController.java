@@ -1,30 +1,25 @@
 package controller.clientview;
 
-import controller.adminview.EditVacationPackageController;
 import controller.util.AlertFactory;
 import controller.util.FormatterFactory;
 import controller.util.TableController;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Callback;
-import service.BookingService;
-import service.DestinationsService;
-import service.OperationStatus;
-import service.VacationPackageService;
+import service.IBookingService;
+import service.IDestinationService;
+import service.IOperationStatus;
+import service.IVacationPackageService;
 import service.filters.*;
+import service.service_impl.BookingService;
+import service.service_impl.DestinationService;
+import service.service_impl.VacationPackageService;
 import service.view_models.DestinationViewModel;
 import service.view_models.VacationPackageUserViewModel;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,12 +33,12 @@ public class VacationBookingController {
 
     private static final String BOOK_TEXT = "Book";
 
-    private final VacationPackageService vacationPackageService =
+    private final IVacationPackageService vacationPackageService =
             VacationPackageService.getInstance();
 
-    private final BookingService bookingService = BookingService.getInstance();
+    private final IBookingService bookingService = BookingService.getInstance();
 
-    private final DestinationsService destinationsService = DestinationsService.getInstance();
+    private final IDestinationService destinationsService = DestinationService.getInstance();
 
     private TableController<VacationPackageUserViewModel> tableController;
 
@@ -142,7 +137,7 @@ public class VacationBookingController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            OperationStatus operationStatus =
+            IOperationStatus operationStatus =
                     bookingService.add(vacationPackageUserViewModel.getId());
             AlertFactory.showAlert(operationStatus);
         }

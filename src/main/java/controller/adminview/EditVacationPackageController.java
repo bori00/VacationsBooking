@@ -7,9 +7,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import service.DestinationsService;
-import service.OperationStatus;
-import service.VacationPackageService;
+import service.IDestinationService;
+import service.IOperationStatus;
+import service.IVacationPackageService;
+import service.service_impl.DestinationService;
+import service.service_impl.OperationStatus;
+import service.service_impl.VacationPackageService;
 import service.view_models.DestinationViewModel;
 import service.view_models.VacationPackageAdminViewModel;
 
@@ -25,10 +28,10 @@ public class EditVacationPackageController {
     @FXML private TextField nrPlacesTextField;
     @FXML private Button editButton;
 
-    private final VacationPackageService vacationPackageService =
+    private final IVacationPackageService vacationPackageService =
             VacationPackageService.getInstance();
 
-    private final DestinationsService destinationsService = DestinationsService.getInstance();
+    private final IDestinationService destinationsService = DestinationService.getInstance();
 
     private VacationPackageAdminViewModel vacationPackageAdminViewModel;
 
@@ -63,7 +66,7 @@ public class EditVacationPackageController {
         }
         destinationName = destinationComboBox.getValue().getName();
 
-        OperationStatus operationStatus = vacationPackageService.edit(
+        IOperationStatus operationStatus = vacationPackageService.edit(
                 vacationPackageAdminViewModel.getId(),
                 nameTextField.getText(),
                 destinationName,

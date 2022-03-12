@@ -1,4 +1,4 @@
-package service;
+package service.service_impl;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -6,6 +6,8 @@ import jakarta.validation.Validator;
 import model.User;
 import repository.RelationalDBImpl.UserRepositoryImpl;
 import repository.UserRepository;
+import service.IUserService;
+import service.IOperationStatus;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,7 +16,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class UserService {
+public class UserService implements IUserService {
     private final EntityManagerFactory entityManagerFactory =
             Persistence.createEntityManagerFactory("vacationbooking.mysql");
 
@@ -28,7 +30,7 @@ public class UserService {
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
 
-    public OperationStatus register(String userName, String password) {
+    public IOperationStatus register(String userName, String password) {
         // validate he new user's data
         User user = new User(userName, password, User.UserType.VacaySeeker);
         Set<ConstraintViolation<User>> constraintViolations =
@@ -57,7 +59,7 @@ public class UserService {
         return OperationStatus.getSuccessfulOperationStatus();
     }
 
-    public OperationStatus logIn(String userName, String password) {
+    public IOperationStatus logIn(String userName, String password) {
         // find user in the database
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         UserRepository userRepository = new UserRepositoryImpl(entityManager);
@@ -79,7 +81,7 @@ public class UserService {
         return OperationStatus.getSuccessfulOperationStatus();
     }
 
-    public OperationStatus logOut() {
+    public IOperationStatus logOut() {
         ActiveUserStatus.getInstance().logOut();
         return OperationStatus.getSuccessfulOperationStatus();
     }

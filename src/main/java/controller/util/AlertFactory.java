@@ -1,12 +1,12 @@
 package controller.util;
 
 import javafx.scene.control.Alert;
-import service.OperationStatus;
+import service.IOperationStatus;
 
 
 public class AlertFactory {
 
-    public static void showAlert(OperationStatus operationStatus) {
+    public static void showAlert(IOperationStatus operationStatus) {
         if (!operationStatus.isSuccessful()) {
             showErrorAlert(operationStatus);
         } else {
@@ -14,14 +14,14 @@ public class AlertFactory {
         }
     }
 
-    private static void showErrorAlert(OperationStatus operationStatus) {
+    private static void showErrorAlert(IOperationStatus operationStatus) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Unsuccessful Operation");
-        alert.setHeaderText(operationStatus.getErrorMsg());
+        alert.setHeaderText(operationStatus.getErrorMessage());
         alert.show();
     }
 
-    private static void showSuccessAlert(OperationStatus operationStatus) {
+    private static void showSuccessAlert(IOperationStatus operationStatus) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Success");
         alert.setHeaderText("Successful operation");
