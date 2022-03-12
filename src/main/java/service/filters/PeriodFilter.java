@@ -18,8 +18,8 @@ public class PeriodFilter implements VacationPackageFilter {
 
     @Override
     public boolean apply(VacationPackage vacationPackage) {
-        return (earliestStartDate == null || !vacationPackage.getStartDate().isBefore(earliestStartDate))&&
-               (latestEndDate == null || !vacationPackage.getEndDate().isAfter(latestEndDate));
+        return (earliestStartDate == null || !vacationPackage.getStartDate().isBefore(earliestStartDate)) &&
+                (latestEndDate == null || !vacationPackage.getEndDate().isAfter(latestEndDate));
     }
 
     @Override

@@ -11,7 +11,6 @@ import javax.persistence.*;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -20,14 +19,14 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @Table(name = "vacation_package")
 @NoArgsConstructor
 @Getter
-public class VacationPackage implements IEntity{
+public class VacationPackage implements IEntity {
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
     @Column(unique = true, nullable = false, length = 50)
-    @NotBlank(message="The vacation package's name cannot be blank.")
-    @Size(min = 3, max = 50, message="The vacation package's name should have a length between 3 " +
+    @NotBlank(message = "The vacation package's name cannot be blank.")
+    @Size(min = 3, max = 50, message = "The vacation package's name should have a length between 3 " +
             "and 50.")
     private String name;
 
@@ -37,16 +36,16 @@ public class VacationPackage implements IEntity{
 
     @Column(nullable = false)
     @NotNull(message = "The vacation package should have a start date.")
-    @FutureOrPresent(message = "The vacation package's start date cannot be in the past.")
+    @FutureOrPresent(message = "You can't create/edit a vacation package that had already started.")
     private LocalDate startDate;
 
     @Column(nullable = false)
     @NotNull(message = "The vacation package should have an end date.")
-    @FutureOrPresent(message = "The vacation package's start date cannot be in the past.")
+    @FutureOrPresent(message = "You can't create/edit a vacation package that had already ended")
     private LocalDate endDate;
 
-    @Column(length=500)
-    @Size(max=500, message = "The vacation pacgkage's descriotion should not contain more than " +
+    @Column(length = 500)
+    @Size(max = 500, message = "The vacation pacgkage's descriotion should not contain more than " +
             "500" +
             " " +
             "characters!")
@@ -69,7 +68,7 @@ public class VacationPackage implements IEntity{
 
     @Transient
     @NotNull(message = "")
-    @DurationMin(days=0, inclusive = true, message = "The end date must be later than or equal to" +
+    @DurationMin(days = 0, inclusive = true, message = "The end date must be later than or equal to" +
             " the start date.")
     private Duration duration;
 
@@ -96,7 +95,7 @@ public class VacationPackage implements IEntity{
     @PrePersist
     @PostLoad
     public void computeDuration() {
-        if (startDate != null && endDate !=null) {
+        if (startDate != null && endDate != null) {
             duration = Duration.ofDays(DAYS.between(startDate, endDate));
         } else {
             duration = null;

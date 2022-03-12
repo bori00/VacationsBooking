@@ -15,12 +15,18 @@ public interface PropertyChangeObservable {
      * Specifies the event types that may occur in the observable Service and observers can
      * listen to.
      */
-    public enum Events {
-        /** Event fired when a new entity is saved. */
+    enum Events {
+        /**
+         * Event fired when a new entity is saved.
+         */
         NEW_ENTITY,
-        /** Event fired when an entity is deleted. */
+        /**
+         * Event fired when an entity is deleted.
+         */
         REMOVED_ENTITY,
-        /** Event fired when the data of an entity is deleted. */
+        /**
+         * Event fired when the data of an entity is deleted.
+         */
         EDITED_ENTITY
     }
 }

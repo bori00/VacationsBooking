@@ -25,7 +25,7 @@ public class DatabaseFilterCriteriaBuilderService {
                         .toArray(Predicate[]::new);
 
         cr.select(root).where(predicates);
-        
+
         Query query = session.createQuery(cr);
         return query;
     }

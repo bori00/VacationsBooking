@@ -34,7 +34,8 @@ public class VacationPackageService extends AbstractService<VacationPackage> imp
 
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-    private VacationPackageService() {}
+    private VacationPackageService() {
+    }
 
     public static VacationPackageService getInstance() {
         return instance;
@@ -120,9 +121,9 @@ public class VacationPackageService extends AbstractService<VacationPackage> imp
     }
 
     public OperationStatus edit(Long id, String name, String destinationName, float price,
-                                 LocalDate startDate,
-                                 LocalDate endDate,
-                                 String extraDetails, int nrPlaces) {
+                                LocalDate startDate,
+                                LocalDate endDate,
+                                String extraDetails, int nrPlaces) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         // validate vacation package data
         // find destination

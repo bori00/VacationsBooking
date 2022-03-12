@@ -73,6 +73,7 @@ public class DestinationsManagementController {
                 final TableCell<DestinationViewModel, Void> cell = new TableCell<>() {
 
                     private final Button btn = new Button(DELETE_TEXT);
+
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             DestinationViewModel destinationViewModelToDelete =
@@ -108,13 +109,13 @@ public class DestinationsManagementController {
                 "cause an inconvenience to the users who booked these vacation packages.");
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
-           IOperationStatus operationStatus = destinationsService.delete(destinationViewModel);
+        if (result.get() == ButtonType.OK) {
+            IOperationStatus operationStatus = destinationsService.delete(destinationViewModel);
             AlertFactory.showAlert(operationStatus);
         }
     }
 
     private void alignCenter(TableColumn tableColumn) {
-        tableColumn.setStyle( "-fx-alignment: CENTER;");
+        tableColumn.setStyle("-fx-alignment: CENTER;");
     }
 }

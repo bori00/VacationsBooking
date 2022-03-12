@@ -16,14 +16,22 @@ import service.service_impl.VacationPackageService;
 import service.view_models.DestinationViewModel;
 
 public class AddVacationPackageController {
-    @FXML private TextArea extraDetailsTextArea;
-    @FXML private ChoiceBox<DestinationViewModel> destinationChoiceBox;
-    @FXML private TextField nameTextField;
-    @FXML private TextField priceTextField;
-    @FXML private DatePicker startDatePicker;
-    @FXML private DatePicker endDatePicker;
-    @FXML private TextField nrPlacesTextField;
-    @FXML private Button createButton;
+    @FXML
+    private TextArea extraDetailsTextArea;
+    @FXML
+    private ChoiceBox<DestinationViewModel> destinationChoiceBox;
+    @FXML
+    private TextField nameTextField;
+    @FXML
+    private TextField priceTextField;
+    @FXML
+    private DatePicker startDatePicker;
+    @FXML
+    private DatePicker endDatePicker;
+    @FXML
+    private TextField nrPlacesTextField;
+    @FXML
+    private Button createButton;
 
     private final IVacationPackageService vacationPackageService =
             VacationPackageService.getInstance();

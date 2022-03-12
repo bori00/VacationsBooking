@@ -1,6 +1,5 @@
 package service.filters;
 
-import lombok.Getter;
 import model.VacationPackage;
 
 import javax.persistence.criteria.CriteriaBuilder;

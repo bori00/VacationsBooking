@@ -20,8 +20,8 @@ public class Destination implements IEntity {
     private Long Id;
 
     @Column(unique = true, nullable = false, length = 50)
-    @NotBlank(message="The destination's name cannot be blank!")
-    @Size(min = 3, max = 50, message="The destination's name should have a length between 3 and 50")
+    @NotBlank(message = "The destination's name cannot be blank!")
+    @Size(min = 3, max = 50, message = "The destination's name should have a length between 3 and 50")
     private String name;
 
     @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL)

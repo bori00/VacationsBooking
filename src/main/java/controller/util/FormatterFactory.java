@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 public class FormatterFactory {
     /**
      * Generates a text formatter for doubles.
+     *
      * @return the double text formatter.
      */
     public static TextFormatter<Double> getDoubleFormatter() {
@@ -51,6 +52,7 @@ public class FormatterFactory {
 
     /**
      * Generates a text formatter for integers.
+     *
      * @return the integer text formatter.
      */
     public static TextFormatter<Integer> getIntegerFormatter() {

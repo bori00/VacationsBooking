@@ -1,22 +1,16 @@
 package repository.RelationalDBImpl;
 
-import model.Destination;
-import model.User;
 import model.VacationPackage;
 import org.hibernate.Session;
 import repository.VacationPackageRepository;
-import service.filters.VacationPackageFilter;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class VacationPackageRepositoryImpl extends RepositoryImpl<VacationPackage> implements VacationPackageRepository {
     public VacationPackageRepositoryImpl(EntityManager entityManager) {

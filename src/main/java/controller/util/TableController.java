@@ -17,14 +17,14 @@ public abstract class TableController<T> implements PropertyChangeListener {
 
     public TableController(Class<T> type,
                            PropertyChangeObservable service,
-                           TableView<T> tableView)  {
+                           TableView<T> tableView) {
         this.type = type;
         service.addPropertyChangeListener(this);
         this.tableView = tableView;
         setupColumns();
         reFillTable();
     }
-    
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println("Some event");
@@ -37,7 +37,7 @@ public abstract class TableController<T> implements PropertyChangeListener {
             reFillTable();
         }
     }
-    
+
     private void setupColumns() {
         Field[] entityFields = type.getDeclaredFields();
 

@@ -6,8 +6,8 @@ import jakarta.validation.Validator;
 import model.User;
 import repository.RelationalDBImpl.UserRepositoryImpl;
 import repository.UserRepository;
-import service.IUserService;
 import service.IOperationStatus;
+import service.IUserService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

@@ -27,7 +27,8 @@ public class BookingService extends AbstractService<Booking> implements IBooking
     public static final String INEXISTENT_VACATION_PACKAGE = "We're sorry, this package can't be " +
             "booked. Please contact an administrator!";
 
-    private BookingService() {}
+    private BookingService() {
+    }
 
     public static BookingService getInstance() {
         return instance;

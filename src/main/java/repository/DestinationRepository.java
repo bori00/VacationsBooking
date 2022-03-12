@@ -1,7 +1,6 @@
 package repository;
 
 import model.Destination;
-import model.User;
 
 import java.util.Optional;
 

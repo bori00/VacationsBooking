@@ -27,7 +27,8 @@ public class DestinationService extends AbstractService<Destination> implements 
 
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-    private DestinationService() {}
+    private DestinationService() {
+    }
 
     public static DestinationService getInstance() {
         return instance;

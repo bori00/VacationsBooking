@@ -24,14 +24,14 @@ public class User implements IEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(unique = true, nullable = false, length=15)
-    @NotBlank(message="Username cannot be blank!")
-    @Size(min = 3, max = 15, message="The username should have a length between 3 and 15")
+    @Column(unique = true, nullable = false, length = 15)
+    @NotBlank(message = "Username cannot be blank!")
+    @Size(min = 3, max = 15, message = "The username should have a length between 3 and 15")
     private String userName;
 
-    @Column(nullable = false, length=20)
-    @NotBlank(message="Password cannot be blank!")
-    @Size(min = 3, max = 20, message="The password should have a length between 3 and 15")
+    @Column(nullable = false, length = 20)
+    @NotBlank(message = "Password cannot be blank!")
+    @Size(min = 3, max = 20, message = "The password should have a length between 3 and 15")
     private String password;
 
     @Column(nullable = false)
@@ -55,7 +55,7 @@ public class User implements IEntity {
 
         private final String code;
 
-        private UserType(String code) {
+        UserType(String code) {
             this.code = code;
         }
 

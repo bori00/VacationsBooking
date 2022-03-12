@@ -6,10 +6,7 @@ import service.package_status.VacationPackageStatus;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class StatusFilter implements VacationPackageFilter {
     private final Collection<VacationPackageStatus> allowedStatus;

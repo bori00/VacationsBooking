@@ -24,12 +24,18 @@ import java.util.List;
 import java.util.Optional;
 
 public class VacationBookingController {
-    @FXML private TextField maxPriceTextField;
-    @FXML private TextField minPriceTextField;
-    @FXML private DatePicker endDatePicker;
-    @FXML private DatePicker startDatePicker;
-    @FXML private ComboBox<DestinationViewModel> destinationComboBox;
-    @FXML private TableView<VacationPackageUserViewModel> vacationsTable;
+    @FXML
+    private TextField maxPriceTextField;
+    @FXML
+    private TextField minPriceTextField;
+    @FXML
+    private DatePicker endDatePicker;
+    @FXML
+    private DatePicker startDatePicker;
+    @FXML
+    private ComboBox<DestinationViewModel> destinationComboBox;
+    @FXML
+    private TableView<VacationPackageUserViewModel> vacationsTable;
 
     private static final String BOOK_TEXT = "Book";
 
@@ -83,10 +89,12 @@ public class VacationBookingController {
         Float maxPrice = null;
         try {
             minPrice = Float.parseFloat(minPriceTextField.getText());
-        } catch(Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         try {
             maxPrice = Float.parseFloat(maxPriceTextField.getText());
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         if (minPrice != null || maxPrice != null) {
             selectedFilters.add(new PriceFilter(minPrice, maxPrice));
         }

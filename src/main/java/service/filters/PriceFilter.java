@@ -19,7 +19,7 @@ public class PriceFilter implements VacationPackageFilter {
     @Override
     public boolean apply(VacationPackage vacationPackage) {
         return (minPrice == null ||
-                    vacationPackage.getPrice() > minPrice) &&
+                vacationPackage.getPrice() > minPrice) &&
                 (maxPrice == null || vacationPackage.getPrice() < maxPrice);
     }
 

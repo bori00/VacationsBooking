@@ -1,19 +1,14 @@
 package repository.RelationalDBImpl;
 
-import model.Booking;
 import model.User;
-import model.VacationPackage;
 import org.hibernate.Session;
-import repository.IRepository;
 import repository.UserRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.List;
 import java.util.Optional;
 
 public class UserRepositoryImpl extends RepositoryImpl<User> implements UserRepository {

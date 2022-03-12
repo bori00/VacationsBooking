@@ -19,14 +19,21 @@ import service.view_models.VacationPackageAdminViewModel;
 public class EditVacationPackageController {
     @FXML
     private TextArea extraDetailsTextArea;
-//    @FXML private ChoiceBox<DestinationViewModel> destinationChoiceBox;
-    @FXML private ComboBox<DestinationViewModel> destinationComboBox;
-    @FXML private TextField nameTextField;
-    @FXML private TextField priceTextField;
-    @FXML private DatePicker startDatePicker;
-    @FXML private DatePicker endDatePicker;
-    @FXML private TextField nrPlacesTextField;
-    @FXML private Button editButton;
+    //    @FXML private ChoiceBox<DestinationViewModel> destinationChoiceBox;
+    @FXML
+    private ComboBox<DestinationViewModel> destinationComboBox;
+    @FXML
+    private TextField nameTextField;
+    @FXML
+    private TextField priceTextField;
+    @FXML
+    private DatePicker startDatePicker;
+    @FXML
+    private DatePicker endDatePicker;
+    @FXML
+    private TextField nrPlacesTextField;
+    @FXML
+    private Button editButton;
 
     private final IVacationPackageService vacationPackageService =
             VacationPackageService.getInstance();

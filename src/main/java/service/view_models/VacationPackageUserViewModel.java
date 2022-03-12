@@ -3,7 +3,6 @@ package service.view_models;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import model.VacationPackage;
-import service.package_status.VacationPackageStatus;
 
 import java.time.LocalDate;
 
