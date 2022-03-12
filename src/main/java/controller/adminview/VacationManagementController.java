@@ -3,11 +3,17 @@ package controller.adminview;
 import controller.util.TableController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import service.VacationPackageService;
 import service.view_models.VacationPackageAdminViewModel;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +48,19 @@ public class VacationManagementController {
 
     @FXML
     private void onNewVacationButtonClicked(ActionEvent actionEvent) {
+        FXMLLoader addVacationPackagePaneLoader = new FXMLLoader(getClass().getResource(
+                "/admin_view/add_vacation_package_pane.fxml"));
+        try {
+            AnchorPane registerPane = addVacationPackagePaneLoader.load();
+            Stage registerStage = new Stage();
+            registerStage.setTitle("Add New Vacation Package");
+            registerStage.initOwner(this.vacationsTable.getScene().getWindow());
+            registerStage.initModality(Modality.WINDOW_MODAL);
+            registerStage.setScene(new Scene(registerPane));
+            registerStage.show();
+        } catch (IOException e) {
+            e.printStackTrace(); //todo
+        }
     }
 
     private void setupDeleteButtonColumn() {

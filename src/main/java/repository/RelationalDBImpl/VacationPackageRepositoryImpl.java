@@ -1,5 +1,6 @@
 package repository.RelationalDBImpl;
 
+import model.Destination;
 import model.User;
 import model.VacationPackage;
 import org.hibernate.Session;
@@ -14,6 +15,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class VacationPackageRepositoryImpl extends RepositoryImpl<VacationPackage> implements VacationPackageRepository {
@@ -37,5 +39,18 @@ public class VacationPackageRepositoryImpl extends RepositoryImpl<VacationPackag
         Query query = session.createQuery(cr);
 
         return (List<VacationPackage>) query.getResultList();
+    }
+
+    @Override
+    public Optional<VacationPackage> findByName(String name) {
+        Session session = (Session) entityManager.getDelegate();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<VacationPackage> cr = cb.createQuery(VacationPackage.class);
+        Root<VacationPackage> root = cr.from(VacationPackage.class);
+
+        cr.select(root).where(cb.equal(root.get("name"), name));
+        Query query = session.createQuery(cr);
+
+        return query.getResultList().stream().findFirst();
     }
 }

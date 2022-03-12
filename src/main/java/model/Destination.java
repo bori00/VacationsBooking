@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,5 +30,6 @@ public class Destination implements IEntity {
 
     public Destination(String name) {
         this.name = name;
+        this.vacationPackages = new ArrayList<>();
     }
 }

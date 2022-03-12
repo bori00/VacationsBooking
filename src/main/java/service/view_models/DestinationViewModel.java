@@ -16,4 +16,9 @@ public class DestinationViewModel {
     public DestinationViewModel(Destination destination) {
         this(destination.getId(), destination.getName());
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
