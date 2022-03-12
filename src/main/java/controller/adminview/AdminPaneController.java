@@ -25,6 +25,11 @@ public class AdminPaneController {
     private Tab vacationPackagesTab;
 
     @FXML
+    void initialize() throws IOException {
+        setupDestinationManagementTab();
+    }
+
+    @FXML
     private void onLogoutButtonClicked() {
         userService.logOut();
         loadLoginStage();
@@ -44,5 +49,12 @@ public class AdminPaneController {
         } catch (IOException e) {
             e.printStackTrace(); //todo
         }
+    }
+
+    private void setupDestinationManagementTab() throws IOException {
+        FXMLLoader productsPaneLoader = new FXMLLoader(getClass().getResource(
+                "/admin_view/manage_destinations_pane.fxml"));
+        AnchorPane destinationsPane = productsPaneLoader.load();
+        destinationsTab.setContent(destinationsPane);
     }
 }
