@@ -24,20 +24,7 @@ public class VacationPackageRepositoryImpl extends RepositoryImpl<VacationPackag
     }
 
     @Override
-    public List<VacationPackage> filterVacationPackages(Collection<VacationPackageFilter> filters) {
-        Session session = (Session) entityManager.getDelegate();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<VacationPackage> cr = cb.createQuery(VacationPackage.class);
-        Root<VacationPackage> root = cr.from(VacationPackage.class);
-
-        Predicate[] predicates =
-                filters.stream()
-                        .map(filter -> filter.getPredicate(cb, root))
-                        .toArray(Predicate[]::new);
-
-        cr.select(root).where(predicates);
-        Query query = session.createQuery(cr);
-
+    public List<VacationPackage> filterVacationPackages(Query query) {
         return (List<VacationPackage>) query.getResultList();
     }
 

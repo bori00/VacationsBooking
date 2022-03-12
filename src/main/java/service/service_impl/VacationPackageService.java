@@ -16,6 +16,7 @@ import service.view_models.VacationPackageAdminViewModel;
 import service.view_models.VacationPackageUserViewModel;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -41,9 +42,10 @@ public class VacationPackageService extends AbstractService<VacationPackage> imp
 
     public List<VacationPackageAdminViewModel> findAllForAdmin(Collection<VacationPackageFilter> filters) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Query query = new DatabaseFilterCriteriaBuilderService().buildQuery(filters, entityManager);
         VacationPackageRepository vacationPackageRepository = new VacationPackageRepositoryImpl(entityManager);
         Collection<VacationPackage> packages =
-                vacationPackageRepository.filterVacationPackages(filters);
+                vacationPackageRepository.filterVacationPackages(query);
         return packages
                 .stream()
                 .map(VacationPackageAdminViewModel::new)
@@ -52,9 +54,10 @@ public class VacationPackageService extends AbstractService<VacationPackage> imp
 
     public List<VacationPackageUserViewModel> findAllForVacaySeeker(Collection<VacationPackageFilter> filters) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Query query = new DatabaseFilterCriteriaBuilderService().buildQuery(filters, entityManager);
         VacationPackageRepository vacationPackageRepository = new VacationPackageRepositoryImpl(entityManager);
         Collection<VacationPackage> packages =
-                vacationPackageRepository.filterVacationPackages(filters);
+                vacationPackageRepository.filterVacationPackages(query);
         return packages
                 .stream()
                 .map(VacationPackageUserViewModel::new)
