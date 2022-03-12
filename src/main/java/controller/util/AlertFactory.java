@@ -1,4 +1,4 @@
-package controller.loginregisterview.util;
+package controller.util;
 
 import javafx.scene.control.Alert;
 import service.OperationStatus;
@@ -22,7 +22,7 @@ public class AlertFactory {
     }
 
     private static void showSuccessAlert(OperationStatus operationStatus) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Success");
         alert.setHeaderText("Successful operation");
         alert.show();
