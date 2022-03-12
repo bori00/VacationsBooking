@@ -1,6 +1,6 @@
 package controller.adminview;
 
-import controller.loginregisterview.util.AlertFactory;
+import controller.util.AlertFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;

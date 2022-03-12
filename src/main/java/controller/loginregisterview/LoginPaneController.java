@@ -1,6 +1,6 @@
 package controller.loginregisterview;
 
-import controller.loginregisterview.util.AlertFactory;
+import controller.util.AlertFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
