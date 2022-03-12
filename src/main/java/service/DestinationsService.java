@@ -86,25 +86,15 @@ public class DestinationsService extends AbstractService<Destination> {
     }
 
     public OperationStatus delete(DestinationViewModel destinationViewModel) {
-        // todo: ask teacher about the expected behavior here!!!
-        // don't allow deletion of any booked packages exist
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        VacationPackageRepository vacationPackageRepository = new VacationPackageRepositoryImpl(entityManager);
-        Collection<VacationPackage> bookedPacakgesForDestination =
-                vacationPackageRepository.filterVacationPackages(List.of(new StatusFilter(
-                        List.of(VacationPackageStatus.IN_PROGRESS, VacationPackageStatus.BOOKED))));
-
-        if (bookedPacakgesForDestination.isEmpty()) {
-            // allow deletion
-            entityManager.getTransaction().begin();
-            DestinationRepository destinationRepository =
-                    new DestinationRepositoryImpl(entityManager);
-            destinationRepository.deleteById(destinationViewModel.getId());
-            entityManager.close();
-            support.firePropertyChange(Events.REMOVED_ENTITY.toString(), null, null);
-            return OperationStatus.getSuccessfulOperationStatus();
-        } else {
-            return OperationStatus.getFailedOperationStatus(DELETING_DESTINATION_WITH_BOOKED_PACKAGES);
-        }
+        entityManager.getTransaction().begin();
+        DestinationRepository destinationRepository =
+                new DestinationRepositoryImpl(entityManager);
+        destinationRepository.deleteById(destinationViewModel.getId());
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        support.firePropertyChange(Events.REMOVED_ENTITY.toString(), null, null);
+        VacationPackageService.getInstance().fireDeletionEvent();
+        return OperationStatus.getSuccessfulOperationStatus();
     }
 }

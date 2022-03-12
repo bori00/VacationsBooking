@@ -163,4 +163,8 @@ public class VacationPackageService extends AbstractService<VacationPackage> {
     public void fireNewBookingEvent() {
         support.firePropertyChange(String.valueOf(Events.EDITED_ENTITY), null, null);
     }
+
+    public void fireDeletionEvent() {
+        support.firePropertyChange(String.valueOf(Events.REMOVED_ENTITY), null, null);
+    }
 }

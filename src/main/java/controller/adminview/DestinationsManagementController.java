@@ -1,5 +1,6 @@
 package controller.adminview;
 
+import controller.util.AlertFactory;
 import controller.util.TableController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Destination;
 import service.DestinationsService;
+import service.OperationStatus;
 import service.view_models.DestinationViewModel;
 
 import java.io.IOException;
@@ -107,7 +109,8 @@ public class DestinationsManagementController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
-           // todo: delete
+           OperationStatus operationStatus = destinationsService.delete(destinationViewModel);
+            AlertFactory.showAlert(operationStatus);
         }
     }
 
