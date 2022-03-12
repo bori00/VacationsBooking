@@ -16,8 +16,6 @@
             </Tab>
             <Tab fx:id="vacationPackagesTab" text="Vacation Packages">
             </Tab>
-            <Tab fx:id="bookingsTab" text="Bookings">
-            </Tab>
         </tabs>
     </TabPane>
     <Button fx:id="logoutButton" layoutX="948.0" layoutY="14.0" mnemonicParsing="false" onAction="#onLogoutButtonClicked" prefHeight="28.0" prefWidth="28.0" styleClass="LogoutButton">

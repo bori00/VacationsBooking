@@ -54,9 +54,9 @@ public class BookingService extends AbstractService<Booking> {
                 bookingRepository.save(booking);
                 entityManager.getTransaction().commit();
                 entityManager.close();
-                support.firePropertyChange(Events.NEW_ENTITY.toString(), null,
+                support.firePropertyChange(Events.EDITED_ENTITY.toString(), null,
                         new VacationPackageUserViewModel(optVacationPackage.get()));
-
+                //adding a new booking may change the data of other booked vacations as well
                 VacationPackageService.getInstance().fireNewBookingEvent();
                 return OperationStatus.getSuccessfulOperationStatus();
             } else {
@@ -67,22 +67,24 @@ public class BookingService extends AbstractService<Booking> {
         }
     }
 
-    public List<VacationPackageUserViewModel> getLoggedInUsersBookedVacations(Long vacationPackageId) {
+    public List<VacationPackageUserViewModel> getLoggedInUsersBookedVacations() {
         // todo: save only the current user's id in the ActiveUserStatus!!!
         User currentUser = ActiveUserStatus.getInstance().getLoggedInUser();
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         UserRepository userRepository = new UserRepositoryImpl(entityManager);
         Optional<User> optUser = userRepository.findById(currentUser.getId());
-        entityManager.close();
 
-        return optUser
+        List<VacationPackageUserViewModel> result = optUser
                 .get()
                 .getBookings()
                 .stream()
                 .map(Booking::getVacationPackage)
                 .map(VacationPackageUserViewModel::new)
                 .collect(Collectors.toList());
+        entityManager.close();
+
+        return result;
 
     }
 }

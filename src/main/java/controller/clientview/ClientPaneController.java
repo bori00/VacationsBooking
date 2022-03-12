@@ -24,6 +24,7 @@ public class ClientPaneController {
     @FXML
     void initialize() throws IOException {
         setupVacationManagementTab();
+        setupBookingsTab();
     }
 
     @FXML
@@ -53,5 +54,12 @@ public class ClientPaneController {
                 "/client_view/book_vacation_packages_pane.fxml"));
         AnchorPane vacationsPane = vacationsPaneLoader.load();
         vacationPackagesTab.setContent(vacationsPane);
+    }
+
+    private void setupBookingsTab() throws IOException {
+        FXMLLoader bookingsPaneLoader = new FXMLLoader(getClass().getResource(
+                "/client_view/view_bookings_pane.fxml"));
+        AnchorPane bookingsPane = bookingsPaneLoader.load();
+        bookingsTab.setContent(bookingsPane);
     }
 }
