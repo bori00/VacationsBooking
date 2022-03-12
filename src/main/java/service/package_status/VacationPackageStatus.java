@@ -23,7 +23,7 @@ public enum VacationPackageStatus {
         }
 
         public Predicate getPredicate(CriteriaBuilder cb, Root<VacationPackage> vacationPackageRoot) {
-            return cb.not(cb.and(NOT_BOOKED.getPredicate(cb, vacationPackageRoot),
+            return cb.not(cb.or(NOT_BOOKED.getPredicate(cb, vacationPackageRoot),
                     BOOKED.getPredicate(cb, vacationPackageRoot)));
         }
     },
