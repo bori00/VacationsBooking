@@ -68,7 +68,7 @@ public abstract class TableController<T> implements PropertyChangeListener {
         }
     }
 
-    private void reFillTable() {
+    public void reFillTable() {
         tableView.getItems().clear();
         List<T> rows = null;
         rows = getUpdatedEntries();

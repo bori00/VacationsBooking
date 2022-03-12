@@ -16,6 +16,10 @@ public class FormatterFactory {
      * @return the double text formatter.
      */
     public static TextFormatter<Double> getDoubleFormatter() {
+        return getDoubleFormatter(0.0);
+    }
+
+    public static TextFormatter<Double> getDoubleFormatter(double defaultValue) {
         Pattern validEditingState = Pattern.compile("-?(([1-9][0-9]*)|0)?(\\.[0-9]*)?");
 
         UnaryOperator<TextFormatter.Change> filter = c -> {
@@ -31,7 +35,7 @@ public class FormatterFactory {
             @Override
             public Double fromString(String s) {
                 if (s.isEmpty() || "-".equals(s) || ".".equals(s) || "-.".equals(s)) {
-                    return 0.0;
+                    return defaultValue;
                 } else {
                     return Double.valueOf(s);
                 }
@@ -42,7 +46,7 @@ public class FormatterFactory {
                 return d.toString();
             }
         };
-        return new TextFormatter<>(converter, 0.0, filter);
+        return new TextFormatter<>(converter, defaultValue, filter);
     }
 
     /**

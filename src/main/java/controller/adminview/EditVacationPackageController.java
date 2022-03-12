@@ -34,7 +34,6 @@ public class EditVacationPackageController {
 
     @FXML
     void initialize() {
-//        destinationChoiceBox.setItems(FXCollections.observableList(destinationsService.findAll()));
         destinationComboBox.setItems(FXCollections.observableList(destinationsService.findAll()));
         priceTextField.setTextFormatter(FormatterFactory.getDoubleFormatter());
         nrPlacesTextField.setTextFormatter(FormatterFactory.getIntegerFormatter());
