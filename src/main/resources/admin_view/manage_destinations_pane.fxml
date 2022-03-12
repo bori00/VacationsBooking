@@ -22,7 +22,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
         </columnResizePolicy>
     </TableView>
-    <Button fx:id="newProductButton" onAction="#onNewProductButtonClicked" layoutX="370.0"
+    <Button fx:id="newProductButton" onAction="#onNewDestinationButtonClicked" layoutX="370.0"
             layoutY="564.0"
             mnemonicParsing="false"
             prefHeight="25.0" prefWidth="150.0" styleClass="SecondaryButton" text="New Destination" />
