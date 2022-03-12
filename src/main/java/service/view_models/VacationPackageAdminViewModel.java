@@ -40,6 +40,9 @@ public class VacationPackageAdminViewModel {
     @ViewField(name = "No. bookings")
     private final int noBookedPlaces;
 
+    @ViewField(displayed = false)
+    private final Long destinationId;
+
     public VacationPackageAdminViewModel(VacationPackage vacationPackage) {
         this(vacationPackage.getId(),
                 vacationPackage.getName(),
@@ -50,6 +53,7 @@ public class VacationPackageAdminViewModel {
                 vacationPackage.getExtraDetails(),
                 VacationPackageStatus.getVacationPackageStatus(vacationPackage),
                 vacationPackage.getNrPlaces(),
-                vacationPackage.getBookings().size());
+                vacationPackage.getBookings().size(),
+                vacationPackage.getDestination().getId());
     }
 }

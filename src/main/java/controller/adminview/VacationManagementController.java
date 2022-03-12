@@ -28,6 +28,7 @@ public class VacationManagementController {
     private Button newVacationButton;
 
     private static final String DELETE_TEXT = "Delete";
+    private static final String EDIT_TEXT = "Edit";
 
     private final VacationPackageService vacationPackageService =
             VacationPackageService.getInstance();
@@ -46,6 +47,7 @@ public class VacationManagementController {
 
         vacationsTable.setPlaceholder(new Label("No Vacations to display"));
         setupDeleteButtonColumn();
+        setupEditButtonColumn();
     }
 
     @FXML
@@ -102,6 +104,47 @@ public class VacationManagementController {
         vacationsTable.getColumns().add(actionCol);
     }
 
+    private void setupEditButtonColumn() {
+        TableColumn<VacationPackageAdminViewModel, Void> actionCol = new TableColumn<>(EDIT_TEXT);
+        alignCenter(actionCol);
+
+        Callback<TableColumn<VacationPackageAdminViewModel, Void>, TableCell<VacationPackageAdminViewModel, Void>> cellFactory
+                = new Callback<>() {
+            @Override
+            public TableCell<VacationPackageAdminViewModel, Void> call(final TableColumn<VacationPackageAdminViewModel, Void> param) {
+                final TableCell<VacationPackageAdminViewModel, Void> cell = new TableCell<>() {
+
+                    private final Button btn = new Button(EDIT_TEXT);
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            VacationPackageAdminViewModel vacationPackageAdminViewModelToDelete =
+                                    getTableView().getItems().get(getIndex());
+                            try {
+                                onEdit(vacationPackageAdminViewModelToDelete);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+        actionCol.setCellFactory(cellFactory);
+        vacationsTable.getColumns().add(actionCol);
+    }
+
     private void onDelete(VacationPackageAdminViewModel vacationPackageAdminViewModel) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Deletion");
@@ -116,6 +159,20 @@ public class VacationManagementController {
                     vacationPackageService.delete(vacationPackageAdminViewModel.getId());
             AlertFactory.showAlert(operationStatus);
         }
+    }
+
+    private void onEdit(VacationPackageAdminViewModel vacationPackageAdminViewModel) throws IOException {
+        FXMLLoader editVacationPaneLoader = new FXMLLoader(getClass().getResource(
+                "/admin_view/edit_vacation_package_pane.fxml"));
+        AnchorPane clientSpecPane = editVacationPaneLoader.load();
+        EditVacationPackageController controller = editVacationPaneLoader.getController();
+        controller.initVacationPackage(vacationPackageAdminViewModel);
+        Stage stage = new Stage();
+        stage.setTitle("Edit Vacation Package data");
+        stage.initOwner(this.vacationsTable.getScene().getWindow());
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.setScene(new Scene(clientSpecPane));
+        stage.show();
     }
 
 

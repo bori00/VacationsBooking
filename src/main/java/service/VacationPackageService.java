@@ -116,40 +116,47 @@ public class VacationPackageService extends AbstractService<VacationPackage> {
         return OperationStatus.getSuccessfulOperationStatus();
     }
 
-    public OperationStatus edit(VacationPackageAdminViewModel vacationPackageAdminViewModel) {
-        // todo: validate
-        boolean validData = true;
-        if (validData) {
-            EntityManager entityManager = entityManagerFactory.createEntityManager();
-            DestinationRepository destinationRepository =
-                    new DestinationRepositoryImpl(entityManager);
-            Optional<Destination> optDestination =
-                    destinationRepository.findByName(vacationPackageAdminViewModel.getDestinationName());
+    public OperationStatus edit(Long id, String name, String destinationName, float price,
+                                LocalDate startDate,
+                                LocalDate endDate,
+                                String extraDetails, int nrPlaces) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        // validate vacation package data
+        // find destination
+        DestinationRepository destinationRepository =
+                new DestinationRepositoryImpl(entityManager);
+        Optional<Destination> optDestination =
+                destinationRepository.findByName(destinationName);
 
-            if (optDestination.isPresent()) {
-                // valid destination
-                entityManager.getTransaction().begin();
-                VacationPackage vacationPackage =
-                        // todo: set id
-                        new VacationPackage(vacationPackageAdminViewModel.getName(),
-                                vacationPackageAdminViewModel.getPrice(),
-                                vacationPackageAdminViewModel.getStartDate(),
-                                vacationPackageAdminViewModel.getEndDate(),
-                                vacationPackageAdminViewModel.getExtraDetails(),
-                                vacationPackageAdminViewModel.getTotalNrPlaces(),
-                                optDestination.get());
-                VacationPackageRepository vacationPackageRepository =
-                        new VacationPackageRepositoryImpl(entityManager);
-                vacationPackageRepository.save(vacationPackage);
-                entityManager.getTransaction().commit();
-                support.firePropertyChange(Events.NEW_ENTITY.toString(), null,
-                        new VacationPackageAdminViewModel(vacationPackage));
-                return OperationStatus.getSuccessfulOperationStatus();
-            } else {
-                return OperationStatus.getFailedOperationStatus(INVALID_DESTINATION);
-            }
-        } else {
-            return OperationStatus.getFailedOperationStatus(""); // todo: send message
+        // validate all fields
+        VacationPackage vacationPackage = new VacationPackage(
+                id, name, price,
+                startDate, endDate, extraDetails, nrPlaces, optDestination.orElse(null));
+        Set<ConstraintViolation<VacationPackage>> constraintViolations =
+                validator.validate(vacationPackage);
+        if (!constraintViolations.isEmpty()) {
+            return OperationStatus.getFailedOperationStatus(
+                    constraintViolations
+                            .stream()
+                            .map(ConstraintViolation::getMessage)
+                            .collect(Collectors.joining("\n")));
         }
+
+        // check that there's no other vacation package with the same name
+        VacationPackageRepository vacationPackageRepository =
+                new VacationPackageRepositoryImpl(entityManager);
+        Optional<VacationPackage> sameNameVacationPackage =
+                vacationPackageRepository.findByName(name);
+        if (sameNameVacationPackage.isPresent() && !sameNameVacationPackage.get().getId().equals(vacationPackage.getId())) {
+            return OperationStatus.getFailedOperationStatus(VACATION_NAME_TAKEN);
+        }
+
+        // valid vacation package data --> save changes
+        entityManager.getTransaction().begin();
+        vacationPackageRepository.save(vacationPackage);
+        entityManager.getTransaction().commit();
+        support.firePropertyChange(Events.EDITED_ENTITY.toString(), null,
+                new VacationPackageAdminViewModel(vacationPackage));
+        return OperationStatus.getSuccessfulOperationStatus();
     }
 }

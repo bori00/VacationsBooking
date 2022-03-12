@@ -86,6 +86,13 @@ public class VacationPackage implements IEntity{
         computeDuration();
     }
 
+    public VacationPackage(Long id, String name, float price, LocalDate startDate,
+                           LocalDate endDate,
+                           String extraDetails, Integer nrPlaces, Destination destination) {
+        this(name, price, startDate, endDate, extraDetails, nrPlaces, destination);
+        this.Id = id;
+    }
+
     @PrePersist
     @PostLoad
     public void computeDuration() {
