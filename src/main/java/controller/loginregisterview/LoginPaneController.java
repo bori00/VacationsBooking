@@ -71,7 +71,7 @@ public class LoginPaneController {
     private String getMainPanePath(User.UserType userType) {
         switch (userType) {
             case VacaySeeker:
-                return "/ClientView/client_main_pane.fxml"; //todo
+                return "/ClientView/client_main_pane.fxml";
             case TravellingAgency:
                 return "/admin_view/admin_main_pane.fxml";
         }

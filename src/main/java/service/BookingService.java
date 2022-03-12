@@ -68,7 +68,6 @@ public class BookingService extends AbstractService<Booking> {
     }
 
     public List<VacationPackageUserViewModel> getLoggedInUsersBookedVacations() {
-        // todo: save only the current user's id in the ActiveUserStatus!!!
         User currentUser = ActiveUserStatus.getInstance().getLoggedInUser();
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
