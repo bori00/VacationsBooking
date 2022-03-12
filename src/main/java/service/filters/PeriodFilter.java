@@ -24,10 +24,20 @@ public class PeriodFilter implements VacationPackageFilter {
 
     @Override
     public Predicate getPredicate(CriteriaBuilder cb, Root<VacationPackage> vacationPackageRoot) {
-        Predicate startingFrom =  cb.greaterThanOrEqualTo(vacationPackageRoot.get("startDate"),
-                earliestStartDate);
-        Predicate endingAt = cb.lessThanOrEqualTo(vacationPackageRoot.get("endDate"),
-                latestEndDate);
+        Predicate startingFrom;
+        if (earliestStartDate != null) {
+            startingFrom = cb.greaterThanOrEqualTo(vacationPackageRoot.get("startDate"),
+                    earliestStartDate);
+        } else {
+            startingFrom = cb.conjunction();
+        }
+        Predicate endingAt;
+        if (latestEndDate != null) {
+            endingAt = cb.lessThanOrEqualTo(vacationPackageRoot.get("endDate"),
+                    latestEndDate);
+        } else {
+            endingAt = cb.conjunction();
+        }
         return cb.and(startingFrom, endingAt);
     }
 }
