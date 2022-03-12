@@ -1,5 +1,6 @@
 package controller.adminview;
 
+import controller.util.AlertFactory;
 import controller.util.TableController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import service.OperationStatus;
 import service.VacationPackageService;
 import service.view_models.VacationPackageAdminViewModel;
 
@@ -110,7 +112,9 @@ public class VacationManagementController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            // todo: delete
+            OperationStatus operationStatus =
+                    vacationPackageService.delete(vacationPackageAdminViewModel.getId());
+            AlertFactory.showAlert(operationStatus);
         }
     }
 

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -45,6 +46,7 @@ public class User implements IEntity {
         this.userName = userName;
         this.password = password;
         this.userType = userType;
+        this.bookings = new HashSet<>();
     }
 
     public enum UserType {

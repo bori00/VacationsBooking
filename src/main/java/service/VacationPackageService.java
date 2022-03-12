@@ -130,6 +130,7 @@ public class VacationPackageService extends AbstractService<VacationPackage> {
                 // valid destination
                 entityManager.getTransaction().begin();
                 VacationPackage vacationPackage =
+                        // todo: set id
                         new VacationPackage(vacationPackageAdminViewModel.getName(),
                                 vacationPackageAdminViewModel.getPrice(),
                                 vacationPackageAdminViewModel.getStartDate(),
