@@ -29,7 +29,9 @@ public abstract class TableController<T> implements PropertyChangeListener {
     
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println("Some event");
         if (evt.getPropertyName().equals(AbstractService.Events.NEW_ENTITY.toString())) {
+            System.out.println("Add Event");
             tableView.getItems().add((T) evt.getNewValue());
         } else if (evt.getPropertyName().equals(AbstractService.Events.REMOVED_ENTITY.toString())) {
             reFillTable();

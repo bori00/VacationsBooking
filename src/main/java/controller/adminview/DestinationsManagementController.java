@@ -24,7 +24,7 @@ public class DestinationsManagementController {
 
     private static final String DELETE_TEXT = "Delete";
 
-    private final DestinationsService destinationsService = new DestinationsService();
+    private final DestinationsService destinationsService = DestinationsService.getInstance();
 
     @FXML
     public void initialize() {

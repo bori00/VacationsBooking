@@ -24,14 +24,18 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class BookingService extends AbstractService<Booking> {
-    // todo: extract name
-    private final EntityManagerFactory entityManagerFactory =
-            Persistence.createEntityManagerFactory("vacationbooking.mysql");
+    private static final BookingService instance = new BookingService();
 
     public static final String CANT_BOOK_FULLY_BOOKED_PACKAGE = "We're sorry, this package is " +
             "already fully booked.";
     public static final String INEXISTENT_VACATION_PACKAGE = "We're sorry, this package can't be " +
             "booked. Please contact an administrator!";
+
+    private BookingService() {}
+
+    public static BookingService getInstance() {
+        return instance;
+    }
 
     public OperationStatus add(Long vacationPackageId) {
         User currentUser = ActiveUserStatus.getInstance().getLoggedInUser();

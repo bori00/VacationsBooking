@@ -26,8 +26,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DestinationsService extends AbstractService<Destination> {
-    private final EntityManagerFactory entityManagerFactory =
-            Persistence.createEntityManagerFactory("vacationbooking.mysql");
+
+    private static final DestinationsService instance = new DestinationsService();
 
     public static String DELETING_DESTINATION_WITH_BOOKED_PACKAGES = "You cannot delete a " +
             "destination for which booked packages exist!";
@@ -35,6 +35,12 @@ public class DestinationsService extends AbstractService<Destination> {
             " exists. Please choose another name!";
 
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+    private DestinationsService() {}
+
+    public static DestinationsService getInstance() {
+        return instance;
+    }
 
     public List<DestinationViewModel> findAll() {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -75,6 +81,7 @@ public class DestinationsService extends AbstractService<Destination> {
         entityManager.close();
         support.firePropertyChange(Events.NEW_ENTITY.toString(), null,
                 new DestinationViewModel(savedDestination));
+        System.out.println("Event fired");
         return OperationStatus.getSuccessfulOperationStatus();
     }
 

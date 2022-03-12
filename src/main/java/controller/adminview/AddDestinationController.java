@@ -12,7 +12,7 @@ public class AddDestinationController {
     @FXML
     private TextField nameTextField;
 
-    private final DestinationsService destinationsService = new DestinationsService();
+    private final DestinationsService destinationsService = DestinationsService.getInstance();
 
     @FXML
     private void onAddButtonClicked(ActionEvent actionEvent) {

@@ -20,12 +20,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class VacationPackageService extends AbstractService<VacationPackage> {
-    // todo: extract name
-    private final EntityManagerFactory entityManagerFactory =
-            Persistence.createEntityManagerFactory("vacationbooking.mysql");
+    private static final VacationPackageService instance = new VacationPackageService();
 
     public static final String INVALID_DESTINATION = "This destination does not exist. Please " +
             "choose another destination for the vacation package!";
+
+    private VacationPackageService() {}
+
+    public static VacationPackageService getInstance() {
+        return instance;
+    }
 
     public List<VacationPackageAdminViewModel> findAllForAdmin(Collection<VacationPackageFilter> filters) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
