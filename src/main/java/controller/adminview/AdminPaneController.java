@@ -27,6 +27,7 @@ public class AdminPaneController {
     @FXML
     void initialize() throws IOException {
         setupDestinationManagementTab();
+        setupVacationManagementTab();
     }
 
     @FXML
@@ -56,5 +57,12 @@ public class AdminPaneController {
                 "/admin_view/manage_destinations_pane.fxml"));
         AnchorPane destinationsPane = productsPaneLoader.load();
         destinationsTab.setContent(destinationsPane);
+    }
+
+    private void setupVacationManagementTab() throws IOException {
+        FXMLLoader vacationsPaneLoader = new FXMLLoader(getClass().getResource(
+                "/admin_view/manage_vacation_packages_pane.fxml"));
+        AnchorPane destinationsPane = vacationsPaneLoader.load();
+        vacationPackagesTab.setContent(destinationsPane);
     }
 }

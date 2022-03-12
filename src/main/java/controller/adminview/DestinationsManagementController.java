@@ -60,9 +60,6 @@ public class DestinationsManagementController {
         }
     }
 
-    /**
-     * Adds a delete button for each row of the table.
-     */
     private void setupDeleteButtonColumn() {
         TableColumn<DestinationViewModel, Void> actionCol = new TableColumn<>(DELETE_TEXT);
         alignCenter(actionCol);
@@ -99,14 +96,14 @@ public class DestinationsManagementController {
         destinationsTable.getColumns().add(actionCol);
     }
 
-    protected void onDelete(DestinationViewModel destinationViewModel) {
+    private void onDelete(DestinationViewModel destinationViewModel) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Deletion");
         alert.setHeaderText("Are you sure that you want to delete this destination?");
         alert.setContentText("All related" +
                 " " +
                 "vacation packages and bookings will be automatically deleted as well. This may " +
-                "cause an incovnevience to the users who booked these vacation packages.");
+                "cause an inconvenience to the users who booked these vacation packages.");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
