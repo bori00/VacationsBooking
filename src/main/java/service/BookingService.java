@@ -56,6 +56,8 @@ public class BookingService extends AbstractService<Booking> {
                 entityManager.close();
                 support.firePropertyChange(Events.NEW_ENTITY.toString(), null,
                         new VacationPackageUserViewModel(optVacationPackage.get()));
+
+                VacationPackageService.getInstance().fireNewBookingEvent();
                 return OperationStatus.getSuccessfulOperationStatus();
             } else {
                 return OperationStatus.getFailedOperationStatus(CANT_BOOK_FULLY_BOOKED_PACKAGE);

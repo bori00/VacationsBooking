@@ -15,12 +15,12 @@ public class Booking implements IEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id", referencedColumnName = "Id")
     // eager loading by default
     private User user;
 
-    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "vacation_id", referencedColumnName = "Id")
     // eager loading by default
     private @Valid VacationPackage vacationPackage;

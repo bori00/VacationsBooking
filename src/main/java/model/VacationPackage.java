@@ -63,7 +63,7 @@ public class VacationPackage implements IEntity{
     // eager loading by default
     private Destination destination;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "vacationPackage", cascade = CascadeType.ALL)
     // lazy loading by default
     private Set<@UniqueElements @Valid Booking> bookings;
 

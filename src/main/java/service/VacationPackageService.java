@@ -159,4 +159,8 @@ public class VacationPackageService extends AbstractService<VacationPackage> {
                 new VacationPackageAdminViewModel(vacationPackage));
         return OperationStatus.getSuccessfulOperationStatus();
     }
+
+    public void fireNewBookingEvent() {
+        support.firePropertyChange(String.valueOf(Events.EDITED_ENTITY), null, null);
+    }
 }
