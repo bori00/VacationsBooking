@@ -5,12 +5,12 @@
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: #356224;
+    -fx-background-color: #b4c4ad;
     -fx-text-fill: black;
 }
 
 .list-view:focused .list-cell:filled:selected {
-    -fx-background-color: #356224;
+    -fx-background-color: #b4c4ad;
     -fx-text-fill: black;
 }
 
