@@ -7,7 +7,10 @@ import model.Destination;
 @AllArgsConstructor
 @Getter
 public class DestinationViewModel {
+    @ViewField(displayed = false)
     private final Long id;
+
+    @ViewField(name = "Name")
     private final String name;
 
     public DestinationViewModel(Destination destination) {
