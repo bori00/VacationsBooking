@@ -55,11 +55,14 @@ public class BookingService extends AbstractService<Booking> implements IBooking
                         new VacationPackageUserViewModel(optVacationPackage.get()));
                 //adding a new booking may change the data of other booked vacations as well
                 VacationPackageService.getInstance().fireNewBookingEvent();
+                entityManager.close();
                 return OperationStatus.getSuccessfulOperationStatus();
             } else {
+                entityManager.close();
                 return OperationStatus.getFailedOperationStatus(CANT_BOOK_FULLY_BOOKED_PACKAGE);
             }
         } else {
+            entityManager.close();
             return OperationStatus.getFailedOperationStatus(INEXISTENT_VACATION_PACKAGE);
         }
     }

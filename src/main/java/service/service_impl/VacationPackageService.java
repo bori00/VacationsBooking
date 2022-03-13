@@ -5,6 +5,7 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import model.Destination;
 import model.VacationPackage;
+import org.hibernate.Session;
 import repository.DestinationRepository;
 import repository.RelationalDBImpl.DestinationRepositoryImpl;
 import repository.RelationalDBImpl.VacationPackageRepositoryImpl;
@@ -27,10 +28,10 @@ import java.util.stream.Collectors;
 public class VacationPackageService extends AbstractService<VacationPackage> implements IVacationPackageService {
     private static final VacationPackageService instance = new VacationPackageService();
 
-    public static final String INVALID_DESTINATION = "This destination does not exist. Please " +
-            "choose another destination for the vacation package!";
     public static final String VACATION_NAME_TAKEN = "This vacation package name is already taken" +
             ". Pleace choose another one";
+    public static final String TOO_FEW_PLACES = "You can't reduce the number of places to this " +
+            "new value, because more users have already booked the vacation.";
 
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
@@ -43,26 +44,34 @@ public class VacationPackageService extends AbstractService<VacationPackage> imp
 
     public List<VacationPackageAdminViewModel> findAllForAdmin(Collection<VacationPackageFilter> filters) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        Query query = new DatabaseFilterCriteriaBuilderService().buildQuery(filters, entityManager);
+        Session session = (Session) entityManager.getDelegate();
+        Query query = new DatabaseFilterCriteriaBuilderService().buildQuery(filters, session);
         VacationPackageRepository vacationPackageRepository = new VacationPackageRepositoryImpl(entityManager);
         Collection<VacationPackage> packages =
                 vacationPackageRepository.filterVacationPackages(query);
-        return packages
+        List<VacationPackageAdminViewModel> result = packages
                 .stream()
                 .map(VacationPackageAdminViewModel::new)
                 .collect(Collectors.toList());
+        session.close();
+        entityManager.close();
+        return result;
     }
 
     public List<VacationPackageUserViewModel> findAllForVacaySeeker(Collection<VacationPackageFilter> filters) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        Query query = new DatabaseFilterCriteriaBuilderService().buildQuery(filters, entityManager);
+        Session session = (Session) entityManager.getDelegate();
+        Query query = new DatabaseFilterCriteriaBuilderService().buildQuery(filters, session);
         VacationPackageRepository vacationPackageRepository = new VacationPackageRepositoryImpl(entityManager);
         Collection<VacationPackage> packages =
                 vacationPackageRepository.filterVacationPackages(query);
-        return packages
+        List<VacationPackageUserViewModel> result = packages
                 .stream()
                 .map(VacationPackageUserViewModel::new)
                 .collect(Collectors.toList());
+        session.close();
+        entityManager.close();
+        return result;
     }
 
     public IOperationStatus add(String name, String destinationName, float price,
@@ -83,6 +92,7 @@ public class VacationPackageService extends AbstractService<VacationPackage> imp
         Set<ConstraintViolation<VacationPackage>> constraintViolations =
                 validator.validate(vacationPackage);
         if (!constraintViolations.isEmpty()) {
+            entityManager.close();
             return OperationStatus.getFailedOperationStatus(
                     constraintViolations
                             .stream()
@@ -96,6 +106,7 @@ public class VacationPackageService extends AbstractService<VacationPackage> imp
         Optional<VacationPackage> sameNameVacationPackage =
                 vacationPackageRepository.findByName(name);
         if (sameNameVacationPackage.isPresent()) {
+            entityManager.close();
             return OperationStatus.getFailedOperationStatus(VACATION_NAME_TAKEN);
         }
 
@@ -105,6 +116,7 @@ public class VacationPackageService extends AbstractService<VacationPackage> imp
         entityManager.getTransaction().commit();
         support.firePropertyChange(Events.NEW_ENTITY.toString(), null,
                 new VacationPackageAdminViewModel(vacationPackage));
+        entityManager.close();
         return OperationStatus.getSuccessfulOperationStatus();
     }
 
@@ -117,6 +129,7 @@ public class VacationPackageService extends AbstractService<VacationPackage> imp
         entityManager.close();
         support.firePropertyChange(Events.REMOVED_ENTITY.toString(), null,
                 null);
+        entityManager.close();
         return OperationStatus.getSuccessfulOperationStatus();
     }
 
@@ -139,6 +152,7 @@ public class VacationPackageService extends AbstractService<VacationPackage> imp
         Set<ConstraintViolation<VacationPackage>> constraintViolations =
                 validator.validate(vacationPackage);
         if (!constraintViolations.isEmpty()) {
+            entityManager.close();
             return OperationStatus.getFailedOperationStatus(
                     constraintViolations
                             .stream()
@@ -152,7 +166,14 @@ public class VacationPackageService extends AbstractService<VacationPackage> imp
         Optional<VacationPackage> sameNameVacationPackage =
                 vacationPackageRepository.findByName(name);
         if (sameNameVacationPackage.isPresent() && !sameNameVacationPackage.get().getId().equals(vacationPackage.getId())) {
+            entityManager.close();
             return OperationStatus.getFailedOperationStatus(VACATION_NAME_TAKEN);
+        }
+
+        // check that the nr of places is not reduced below the number of bookings
+        if (sameNameVacationPackage.isPresent() && sameNameVacationPackage.get().getBookings().size() > nrPlaces) {
+            entityManager.close();
+            return OperationStatus.getFailedOperationStatus(TOO_FEW_PLACES);
         }
 
         // valid vacation package data --> save changes
@@ -161,6 +182,7 @@ public class VacationPackageService extends AbstractService<VacationPackage> imp
         entityManager.getTransaction().commit();
         support.firePropertyChange(Events.EDITED_ENTITY.toString(), null,
                 new VacationPackageAdminViewModel(vacationPackage));
+        entityManager.close();
         return OperationStatus.getSuccessfulOperationStatus();
     }
 

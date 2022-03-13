@@ -63,6 +63,7 @@ public class DestinationService extends AbstractService<Destination> implements 
         DestinationRepository destinationRepository = new DestinationRepositoryImpl(entityManager);
         Optional<Destination> sameNameDestination = destinationRepository.findByName(name);
         if (sameNameDestination.isPresent()) {
+            entityManager.close();
             return OperationStatus.getFailedOperationStatus(DESTINATION_NAME_TAKEN);
         }
 
@@ -73,7 +74,6 @@ public class DestinationService extends AbstractService<Destination> implements 
         entityManager.close();
         support.firePropertyChange(Events.NEW_ENTITY.toString(), null,
                 new DestinationViewModel(savedDestination));
-        System.out.println("Event fired");
         return OperationStatus.getSuccessfulOperationStatus();
     }
 

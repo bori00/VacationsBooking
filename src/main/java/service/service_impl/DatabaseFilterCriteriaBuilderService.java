@@ -13,8 +13,7 @@ import javax.persistence.criteria.Root;
 import java.util.Collection;
 
 public class DatabaseFilterCriteriaBuilderService {
-    public Query buildQuery(Collection<VacationPackageFilter> filters, EntityManager entityManager) {
-        Session session = (Session) entityManager.getDelegate();
+    public Query buildQuery(Collection<VacationPackageFilter> filters, Session session) {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<VacationPackage> cr = cb.createQuery(VacationPackage.class);
         Root<VacationPackage> root = cr.from(VacationPackage.class);
