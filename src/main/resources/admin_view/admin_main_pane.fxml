@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="990.0" styleClass="TopAnchorName"
+            xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.adminview.AdminPaneController">
+    <stylesheets>
+        <URL value="@../general_stylesheets.css" />
+    </stylesheets>
+    <TabPane layoutX="50.0" layoutY="24.0" prefHeight="658.0" prefWidth="890.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab fx:id="destinationsTab" text="Destinations">
+            </Tab>
+            <Tab fx:id="vacationPackagesTab" text="Vacation Packages">
+            </Tab>
+        </tabs>
+    </TabPane>
+    <Button fx:id="logoutButton" layoutX="948.0" layoutY="14.0" mnemonicParsing="false" onAction="#onLogoutButtonClicked" prefHeight="28.0" prefWidth="28.0" styleClass="LogoutButton">
+    </Button>
+</AnchorPane>

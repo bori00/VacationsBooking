@@ -16,14 +16,14 @@ public enum VacationPackageStatus {
             return cb.equal(cb.size(vacationPackageRoot.get("bookings")), 0);
         }
     },
-    IN_PROGRESS{
+    IN_PROGRESS {
         public boolean hasStatus(VacationPackage vacationPackage) {
             return !vacationPackage.getBookings().isEmpty() &&
                     vacationPackage.getBookings().size() < vacationPackage.getNrPlaces();
         }
 
         public Predicate getPredicate(CriteriaBuilder cb, Root<VacationPackage> vacationPackageRoot) {
-            return cb.not(cb.and(NOT_BOOKED.getPredicate(cb, vacationPackageRoot),
+            return cb.not(cb.or(NOT_BOOKED.getPredicate(cb, vacationPackageRoot),
                     BOOKED.getPredicate(cb, vacationPackageRoot)));
         }
     },
@@ -52,6 +52,6 @@ public enum VacationPackageStatus {
     public abstract boolean hasStatus(VacationPackage vacationPackage);
 
     public abstract Predicate getPredicate(CriteriaBuilder cb,
-                                      Root<VacationPackage> vacationPackageRoot);
+                                           Root<VacationPackage> vacationPackageRoot);
 
 }

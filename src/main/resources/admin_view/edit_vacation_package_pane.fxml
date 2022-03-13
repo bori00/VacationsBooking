@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="568.0" prefWidth="875.0" styleClass="TopAnchorName" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.adminview.EditVacationPackageController">
+    <stylesheets>
+        <URL value="@../general_stylesheets.css" />
+    </stylesheets>
+    <children>
+        <AnchorPane layoutX="44.0" layoutY="41.0" prefHeight="483.0" prefWidth="788.0">
+            <Label layoutX="292.0" layoutY="22.0" text="Vacation Package's Data">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="193.0" layoutY="74.0" prefHeight="25.0" prefWidth="56.0" text="Name:">
+                <font>
+                    <Font size="16.0" />
+                </font>
+            </Label>
+            <TextField fx:id="nameTextField" layoutX="263.0" layoutY="74.0" prefHeight="25.0" prefWidth="331.0" promptText="vacation name" />
+            <Label alignment="CENTER" layoutX="163.0" layoutY="114.0" prefHeight="26.0" prefWidth="86.0" text="Destination:">
+                <font>
+                    <Font size="16.0" />
+                </font>
+            </Label>
+            <ComboBox fx:id="destinationComboBox" layoutX="264.0" layoutY="115.0" prefHeight="26.0" prefWidth="331.0" />
+            <Label alignment="CENTER" layoutX="193.0" layoutY="154.0" prefHeight="25.0" prefWidth="56.0" text="Price:">
+                <font>
+                    <Font size="16.0" />
+                </font>
+            </Label>
+            <TextField fx:id="priceTextField" layoutX="263.0" layoutY="154.0" prefHeight="25.0" prefWidth="331.0" promptText="vacation price" />
+            <Label alignment="CENTER" layoutX="169.0" layoutY="194.0" prefHeight="26.0" prefWidth="80.0" text="Start Date:">
+                <font>
+                    <Font size="16.0" />
+                </font>
+            </Label>
+            <DatePicker fx:id="startDatePicker" layoutX="264.0" layoutY="194.0" prefHeight="26.0" prefWidth="331.0" />
+            <Label alignment="CENTER" layoutX="169.0" layoutY="234.0" prefHeight="26.0" prefWidth="80.0" text="End Date:">
+                <font>
+                    <Font size="16.0" />
+                </font>
+            </Label>
+            <DatePicker fx:id="endDatePicker" layoutX="264.0" layoutY="234.0" prefHeight="26.0" prefWidth="331.0" />
+            <Label alignment="CENTER" layoutX="156.0" layoutY="274.0" prefHeight="26.0" prefWidth="93.0" text="Nr of places:">
+                <font>
+                    <Font size="16.0" />
+                </font>
+            </Label>
+            <TextField fx:id="nrPlacesTextField" layoutX="263.0" layoutY="274.0" prefHeight="25.0" prefWidth="331.0" promptText="max. nr of participants" />
+            <Label alignment="CENTER" layoutX="156.0" layoutY="314.0" prefHeight="26.0" prefWidth="93.0" text="Extra details:">
+                <font>
+                    <Font size="16.0" />
+                </font>
+            </Label>
+            <TextArea fx:id="extraDetailsTextArea" layoutX="265.0" layoutY="314.0" prefHeight="84.0" prefWidth="331.0" />
+            <Button fx:id="editButton" layoutX="349.0" layoutY="431.0" mnemonicParsing="false" onAction="#onEditButtonClicked" styleClass="PrimaryButton" text="Save Changes" />
+        </AnchorPane>
+    </children>
+</AnchorPane>

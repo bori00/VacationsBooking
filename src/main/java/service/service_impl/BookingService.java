@@ -1,39 +1,40 @@
-package service;
+package service.service_impl;
 
 import model.Booking;
-import model.Destination;
 import model.User;
 import model.VacationPackage;
 import repository.BookingRepository;
-import repository.DestinationRepository;
 import repository.RelationalDBImpl.BookingRepositoryImpl;
-import repository.RelationalDBImpl.DestinationRepositoryImpl;
 import repository.RelationalDBImpl.UserRepositoryImpl;
 import repository.RelationalDBImpl.VacationPackageRepositoryImpl;
 import repository.UserRepository;
 import repository.VacationPackageRepository;
+import service.IBookingService;
+import service.IOperationStatus;
 import service.package_status.VacationPackageStatus;
-import service.view_models.DestinationViewModel;
 import service.view_models.VacationPackageUserViewModel;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class BookingService extends AbstractService<Booking> {
-    // todo: extract name
-    private final EntityManagerFactory entityManagerFactory =
-            Persistence.createEntityManagerFactory("vacationbooking.mysql");
+public class BookingService extends AbstractService<Booking> implements IBookingService {
+    private static final BookingService instance = new BookingService();
 
     public static final String CANT_BOOK_FULLY_BOOKED_PACKAGE = "We're sorry, this package is " +
             "already fully booked.";
     public static final String INEXISTENT_VACATION_PACKAGE = "We're sorry, this package can't be " +
             "booked. Please contact an administrator!";
 
-    public OperationStatus add(Long vacationPackageId) {
+    private BookingService() {
+    }
+
+    public static BookingService getInstance() {
+        return instance;
+    }
+
+    public IOperationStatus add(Long vacationPackageId) {
         User currentUser = ActiveUserStatus.getInstance().getLoggedInUser();
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -50,33 +51,39 @@ public class BookingService extends AbstractService<Booking> {
                 bookingRepository.save(booking);
                 entityManager.getTransaction().commit();
                 entityManager.close();
-                support.firePropertyChange(Events.NEW_ENTITY.toString(), null,
+                support.firePropertyChange(Events.EDITED_ENTITY.toString(), null,
                         new VacationPackageUserViewModel(optVacationPackage.get()));
+                //adding a new booking may change the data of other booked vacations as well
+                VacationPackageService.getInstance().fireNewBookingEvent();
+                entityManager.close();
                 return OperationStatus.getSuccessfulOperationStatus();
             } else {
+                entityManager.close();
                 return OperationStatus.getFailedOperationStatus(CANT_BOOK_FULLY_BOOKED_PACKAGE);
             }
         } else {
+            entityManager.close();
             return OperationStatus.getFailedOperationStatus(INEXISTENT_VACATION_PACKAGE);
         }
     }
 
-    public List<VacationPackageUserViewModel> getLoggedInUsersBookedVacations(Long vacationPackageId) {
-        // todo: save only the current user's id in the ActiveUserStatus!!!
+    public List<VacationPackageUserViewModel> getLoggedInUsersBookedVacations() {
         User currentUser = ActiveUserStatus.getInstance().getLoggedInUser();
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         UserRepository userRepository = new UserRepositoryImpl(entityManager);
         Optional<User> optUser = userRepository.findById(currentUser.getId());
-        entityManager.close();
 
-        return optUser
+        List<VacationPackageUserViewModel> result = optUser
                 .get()
                 .getBookings()
                 .stream()
                 .map(Booking::getVacationPackage)
                 .map(VacationPackageUserViewModel::new)
                 .collect(Collectors.toList());
+        entityManager.close();
+
+        return result;
 
     }
 }

@@ -1,0 +1,106 @@
+.root {
+    -fx-accent: #356224;
+    /*#862929*/
+    -fx-focus-color: #356224;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #b4c4ad;
+    -fx-text-fill: black;
+}
+
+.list-view:focused .list-cell:filled:selected {
+    -fx-background-color: #b4c4ad;
+    -fx-text-fill: black;
+}
+
+.list-cell:filled:selected AnchorPane Label{
+    -fx-text-fill: black;
+}
+
+.list-view:focused .list-cell:filled:selected AnchorPane Label{
+    -fx-text-fill: black;
+}
+
+.TopAnchorName {
+    -fx-background-image: url("/img/vacation_background.jpg");
+    -fx-background-size: 100% 100%;
+}
+
+.TransperentAnchorPane{
+    -fx-background-color: rgba(255, 255, 255, 0.9);
+}
+
+.FullyTransparentAnchorPane {
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+AnchorPane {
+    -fx-background-color: white;
+}
+
+Button {
+    -fx-border-width: 0.8;
+    -fx-border-radius: 3px;
+}
+
+Button:hover {
+    -fx-border-width: 1.2px;
+}
+
+.PrimaryButton {
+    -fx-background-color: #0e8813;
+    -fx-text-fill: white;
+}
+
+.PrimaryButton:hover {
+    -fx-background-color: #356224;
+    -fx-border-color: #356224;
+    -fx-border-width: 1.0px;
+}
+
+.SecondaryButton {
+    -fx-background-color: transparent;
+    -fx-border-color: #0e8813;
+}
+
+.LogoutButton {
+    -fx-background-image: url("/img/logout.png");
+    -fx-background-size: 80% 80%;
+    -fx-background-position: center;
+    -fx-background-blend-mode: screen;
+    -fx-background-color: rgba(255, 255, 255, 0.9);
+}
+
+.CartButton {
+    -fx-background-image: url("/img/cart.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 80% 80%;
+    -fx-background-position: center;
+    -fx-background-blend-mode: screen;
+}
+
+.AddButton {
+    -fx-background-image: url("/img/add.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 80% 80%;
+    -fx-background-position: center;
+    -fx-background-blend-mode: screen;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+}
+
+.RemoveButton {
+    -fx-background-image: url("/img/remove.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 80% 80%;
+    -fx-background-position: center;
+    -fx-background-blend-mode: screen;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+}
+
+AnchorPane:focused {
+    -fx-highlight-text-fill: black;
+    -fx-text-fill: black;
+}

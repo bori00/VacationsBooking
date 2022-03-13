@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="350.0" prefWidth="642.0" styleClass="TopAnchorName"
+            xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.loginregisterview.LoginPaneController">
+    <stylesheets>
+        <URL value="@general_stylesheets.css" />
+    </stylesheets>
+    <AnchorPane layoutX="37.0" layoutY="43.0" prefHeight="267.0" prefWidth="568.0" styleClass="TransperentAnchorPane">
+        <children>
+            <Label alignment="CENTER_RIGHT" layoutX="74.0" layoutY="93.0" prefHeight="17.0" prefWidth="192.0" text="UserName:">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </Label>
+            <TextField fx:id="userNameTextField" layoutX="284.0" layoutY="94.0" prefHeight="25.0"
+                       prefWidth="231.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="74.0" layoutY="150.0" prefHeight="17.0" prefWidth="192.0" text="Password:">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </Label>
+            <PasswordField fx:id="passwordField" layoutX="284.0" layoutY="151.0" prefHeight="25.0"
+                       prefWidth="231.0" />
+            <Label layoutX="219.0" layoutY="24.0" text="Login">
+                <font>
+                    <Font size="36.0" />
+                </font>
+            </Label>
+            <Button fx:id="loginButton" onAction="#onLoginButtonClicked" layoutX="286.0"
+                    layoutY="213.0" mnemonicParsing="false"
+                    prefHeight="25.0"
+                    prefWidth="62.0" styleClass="PrimaryButton" text="Log in!" />
+            <Button fx:id="registerButton" onAction="#onRegisterButtonClicked" layoutX="217.0"
+                    layoutY="213.0"
+                    mnemonicParsing="false"
+                    styleClass="SecondaryButton" text="Register" />
+        </children></AnchorPane>
+</AnchorPane>

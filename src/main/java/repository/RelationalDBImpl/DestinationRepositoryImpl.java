@@ -1,10 +1,7 @@
 package repository.RelationalDBImpl;
 
-import model.Booking;
-import model.Destination;
 import model.Destination;
 import org.hibernate.Session;
-import repository.BookingRepository;
 import repository.DestinationRepository;
 
 import javax.persistence.EntityManager;

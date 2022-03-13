@@ -20,9 +20,11 @@ public class AvailabilityFilter implements VacationPackageFilter {
 
     @Override
     public Predicate getPredicate(CriteriaBuilder cb, Root<VacationPackage> vacationPackageRoot) {
-        return cb.and(new PeriodFilter(LocalDate.now(), null).getPredicate(cb,
-                vacationPackageRoot),
-                      new StatusFilter(List.of(VacationPackageStatus.NOT_BOOKED,
-                VacationPackageStatus.IN_PROGRESS)).getPredicate(cb, vacationPackageRoot));
+        return cb.and(new PeriodFilter(LocalDate.now(), null)
+                        .getPredicate(cb, vacationPackageRoot),
+                new StatusFilter(List.of(
+                        VacationPackageStatus.NOT_BOOKED,
+                        VacationPackageStatus.IN_PROGRESS))
+                        .getPredicate(cb, vacationPackageRoot));
     }
 }

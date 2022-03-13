@@ -1,13 +1,10 @@
 package repository.RelationalDBImpl;
 
 import model.IEntity;
-import org.hibernate.Session;
 import repository.IRepository;
 
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.Table;
 import java.util.List;
 import java.util.Optional;
 

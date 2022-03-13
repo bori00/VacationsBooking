@@ -10,18 +10,42 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 public class VacationPackageAdminViewModel {
+    @ViewField(displayed = false)
+    private final Long id;
+
+    @ViewField(name = "Name")
     private final String name;
+
+    @ViewField(name = "Destination")
     private final String destinationName;
+
+    @ViewField(name = "Price")
     private final float price;
+
+    @ViewField(name = "Start Date")
     private final LocalDate startDate;
+
+    @ViewField(name = "End Date")
     private final LocalDate endDate;
+
+    @ViewField(name = "Details")
     private final String extraDetails;
+
+    @ViewField(name = "Status")
     private final VacationPackageStatus status;
+
+    @ViewField(name = "No. places")
     private final int totalNrPlaces;
+
+    @ViewField(name = "No. bookings")
     private final int noBookedPlaces;
 
+    @ViewField(displayed = false)
+    private final Long destinationId;
+
     public VacationPackageAdminViewModel(VacationPackage vacationPackage) {
-        this(vacationPackage.getName(),
+        this(vacationPackage.getId(),
+                vacationPackage.getName(),
                 vacationPackage.getDestination().getName(),
                 vacationPackage.getPrice(),
                 vacationPackage.getStartDate(),
@@ -29,6 +53,7 @@ public class VacationPackageAdminViewModel {
                 vacationPackage.getExtraDetails(),
                 VacationPackageStatus.getVacationPackageStatus(vacationPackage),
                 vacationPackage.getNrPlaces(),
-                vacationPackage.getBookings().size());
+                vacationPackage.getBookings().size(),
+                vacationPackage.getDestination().getId());
     }
 }
